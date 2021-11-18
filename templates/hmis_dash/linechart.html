@@ -181,9 +181,10 @@
   //   let prjType = 'Urban';
   let selectedArea = "{{ dist_name }}";
   let areaName = [];
-  let selectint = parseInt(selectedArea)
+  let selectint = parseInt(selectedArea);
+  console.log(selectint)
   if (selectint > 440 )
-    areaName.push(441);  
+    areaName.push(selectint);  
   else
     areaName.push(405);
   let selectedYear = "{{fy}}";
@@ -650,7 +651,7 @@
   $(function () {
     //bind event
     if (selectint > 440 )
-      $('#state').val(441);
+      $('#state').val(selectint);
     else
       $('#state').val(405);
 

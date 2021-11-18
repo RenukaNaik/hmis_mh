@@ -13,6 +13,7 @@ from django.core.serializers import serialize
 from .serializers import HmisPwSerializer, HmisCdSerializer, HmisCiSerializer
 import json
 from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 
@@ -64,9 +65,13 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
         cd_data = MhDSdCd.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
 
         st_name = MhAreaDetails.objects.filter(Q(area_level = 3)).values('area_name', 'area_id').distinct().order_by('area_id')
-        dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name', 'area_id').distinct().order_by('area_id')
+        dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+
+        areaName = MhAreaDetails.objects.filter(Q(area_parent_id__gte = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
 
         month_name = MhDSdPw.objects.filter(Q(financial_year=fy_name)).values('month').distinct().order_by('month')
+
+        areaList = json.dumps(list(areaName), cls=DjangoJSONEncoder)
 
         pw_json = serializers.serialize('json', pw_data)
         ci_json = serializers.serialize('json', ci_data)
@@ -78,7 +83,7 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
             'cd_data':cd_json
         }
         
-        return render(request,'dashboard/dt_dashboard.html', {'st_list':st_name, 'dt_list':dt_name ,'dist_name':area_name, 'context':context, 'months':month_name, 'fy': fy_name})
+        return render(request,'dashboard/dt_dashboard.html', {'st_list':st_name, 'dt_list':dt_name, 'areaData':areaList ,'dist_name':area_name, 'context':context, 'months':month_name, 'fy': fy_name})
 
 
 

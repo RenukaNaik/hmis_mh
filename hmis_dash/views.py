@@ -25,7 +25,9 @@ class hmisBarChart(LoginRequiredMixin, TemplateView):
         dtint = int(district)
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
         else:    
             data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
 
@@ -48,8 +50,10 @@ class hmisLineChart(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).order_by('month').exclude(month='All').values())
-            area_list = MhAreaDetails.objects.filter(Q(area_parent_id=405)).values('area_name', 'area_id').distinct().order_by('area_id')
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
             data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
@@ -296,7 +300,6 @@ class chldDiseaseLine(LoginRequiredMixin, TemplateView):
         district = request.GET.get('dist_name', dist_name) 
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
-        print(dtint)
         if dtint > 440:
             data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).order_by('month').exclude(month='All').values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=405)).values('area_name', 'area_id').distinct().order_by('area_id')
@@ -357,7 +360,6 @@ class chldDiseaseLineNumeric(LoginRequiredMixin, TemplateView):
         for i in data:
             area_n = MhAreaDetails.objects.filter(Q(area_id = i['area_id'])).values('area_name')
             i.update(area_n[0])
-        print(area_list)
 
         jsondata = json.dumps(data, cls=DjangoJSONEncoder)
 
@@ -484,7 +486,7 @@ class mapStPW(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
         st_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
 
-        dt_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+        dt_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id__gte = 405)).values())
 
         for i in st_data:
             area_n = MhAreaDetails.objects.filter(Q(area_id = i['area_id'])).values('area_name')
@@ -524,7 +526,7 @@ class mapStChldImmu(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
         st_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
 
-        dt_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+        dt_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id__gte = 405)).values())
 
         for i in st_data:
             area_n = MhAreaDetails.objects.filter(Q(area_id = i['area_id'])).values('area_name')
@@ -538,19 +540,17 @@ class mapStChldImmu(LoginRequiredMixin, TemplateView):
 
         dt_jsondata = json.dumps(dt_data, cls=DjangoJSONEncoder)
         
-        st_geodata = serialize('geojson', MhDtGeojson.objects.all(),
-                                geometry_field = 'wkb_geometry',
-                                fields = ('ogc_fid','state', 'district','area_id'))
+        # st_geodata = serialize('geojson', MhDtGeojson.objects.all(),
+        #                         geometry_field = 'wkb_geometry',
+        #                         fields = ('ogc_fid','state', 'district','area_id'))
 
-        dt_geodata = serialize('geojson', MhSubdtGeojson.objects.all(),
-                                geometry_field = 'wkb_geometry',
-                                fields = ('ogc_fid','state', 'district', 'block', 'area_id'))                                
+        # dt_geodata = serialize('geojson', MhSubdtGeojson.objects.all(),
+        #                         geometry_field = 'wkb_geometry',
+        #                         fields = ('ogc_fid','state', 'district', 'block', 'area_id'))                                
         
         context = {
             'st_data': st_jsondata,
             'dt_data': dt_jsondata,
-            'st_geodata': st_geodata,
-            'dt_geodata': dt_geodata
         }
 
 
@@ -565,7 +565,7 @@ class mapStChldDisease(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
         st_data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
 
-        dt_data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+        dt_data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id__gte = 405)).values())
 
         for i in st_data:
             area_n = MhAreaDetails.objects.filter(Q(area_id = i['area_id'])).values('area_name')
