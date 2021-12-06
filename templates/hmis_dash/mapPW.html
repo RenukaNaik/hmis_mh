@@ -43,9 +43,9 @@
     stroke: #ccebed;
     stroke-width: 1px;
   }
-  text{
+  /* text{
     font-size: calc(35% + 0.5vw + 0.5vh);
-  }
+  } */
 
   .info-hirar {
     font-size: calc(50% + 0.5vw + 0.5vh);
@@ -64,6 +64,10 @@
   .drilldown{
   color: #007FBB;
 }
+.textLabel { 
+    font-size: calc(1% + 0.4vw + 0.4vh);
+    font-weight: bold;
+  }
 </style>
 {% endblock %}
 {% block feature %}
@@ -568,11 +572,11 @@
 
       if (level === 0) {
         console.log(level, "level")
-        textLabel.attr("font-size", "0.10em").attr("font-weight", "bold");
+        textLabel.attr('class','textLabel');
       } 
       else if (level === 1) {
         console.log(level, "level")
-        textLabel.attr("font-size", "0.85rem").attr("font-weight", "bold");
+        textLabel.attr('class','textLabel');
       }
       //  else if (level === 2) {
       //   textLabel.attr("font-size", "0.38em").attr("font-weight", "bold");
@@ -1276,7 +1280,7 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
         });
 
         const promise2 = new Promise((resolve, reject) => {
-            let subdtJSON = d3.json("{% static 'hmis_dash/json/mh_subdtdt_geojson_181121.json' %}");
+            let subdtJSON = d3.json("{% static 'hmis_dash/json/mh_sub_dt_equi2hmis071221.json' %}");
             resolve(subdtJSON);
         });
 
@@ -1290,7 +1294,7 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
             // , promise3
         ]).then(function (responses) {
             let dtObject = responses[0].objects.mh_dt_geojson_181121;
-            let prjtObject = responses[1].objects.mh_subdtdt_geojson_181121;
+            let prjtObject = responses[1].objects.mh_sub_dt_equi2hmis071221;
             // let beatObject = responses[2].objects.palghar_beat_geojson_151121;
 
             let dtFeatures, subdtFeatures;

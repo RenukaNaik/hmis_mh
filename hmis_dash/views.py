@@ -128,7 +128,9 @@ class hmisBarNumericChart(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -375,9 +377,11 @@ class hmisTableChart(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            pw_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
-            childIm_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
-            childDi_data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            pw_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
+            childIm_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
+            childDi_data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
         else:
             pw_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
             childIm_data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -417,7 +421,9 @@ class pieStateLevel(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdPwPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPwPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdPwPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -486,7 +492,7 @@ class mapStPW(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
         st_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
 
-        dt_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id__gte = 405)).values())
+        dt_data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id__gte = 405) & Q(area_parent_id__lte = 833)).values())
 
         for i in st_data:
             area_n = MhAreaDetails.objects.filter(Q(area_id = i['area_id'])).values('area_name')
@@ -499,20 +505,11 @@ class mapStPW(LoginRequiredMixin, TemplateView):
         st_jsondata = json.dumps(st_data, cls=DjangoJSONEncoder)
 
         dt_jsondata = json.dumps(dt_data, cls=DjangoJSONEncoder)
-        
-        st_geodata = serialize('geojson', MhDtGeojson.objects.all(),
-                                geometry_field = 'wkb_geometry',
-                                fields = ('ogc_fid','state', 'district', 'area_id'))
-
-        dt_geodata = serialize('geojson', MhSubdtGeojson.objects.all(),
-                                geometry_field = 'wkb_geometry',
-                                fields = ('ogc_fid', 'state', 'district', 'block', 'area_id'))                                
+                                     
         
         context = {
             'st_data': st_jsondata,
             'dt_data': dt_jsondata,
-            'st_geodata': st_geodata,
-            'dt_geodata': dt_geodata
         }
 
         return render(request,'hmis_dash/mapPW.html', {'context':context, 'fy': fy_name})

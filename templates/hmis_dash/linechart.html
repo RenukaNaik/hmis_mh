@@ -183,10 +183,10 @@
   let areaName = [];
   let selectint = parseInt(selectedArea);
   console.log(selectint)
-  if (selectint > 440 )
+  // if (selectint > 440 )
     areaName.push(selectint);  
-  else
-    areaName.push(405);
+  // else
+  //   areaName.push(405);
   let selectedYear = "{{fy}}";
 
   const svg = d3.select('#chart').append('svg').attr('id', 'svg1').attr('width', 1000)
@@ -650,10 +650,10 @@
 
   $(function () {
     //bind event
-    if (selectint > 440 )
+    // if (selectint > 440 )
       $('#state').val(selectint);
-    else
-      $('#state').val(405);
+    // else
+    //   $('#state').val(405);
 
 
     $(".category a").click(function () {
