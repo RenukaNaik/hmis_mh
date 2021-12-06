@@ -21,14 +21,17 @@ from django.core.serializers.json import DjangoJSONEncoder
 def create_post_area(request, fy=None, dist_name=None):
     dist = request.GET.get('dist_name', dist_name) 
     areaSelected = request.GET.get('area')
-    dtSelected = request.GET.get('area_district')
+    # dtSelected = request.GET.get('area_district')
+    # phcSelected = request.GET.get()
+    # print(dtSelected, "dt")
     monthSelected = request.GET.get('month')
     fy_name = request.GET.get('fy', fy) 
 
-    if ((areaSelected == '405') and (dtSelected != '0') ):
-        pw_data = MhDSdPw.objects.filter(Q(area_id=dtSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
-    else:
-        pw_data = MhDSdPw.objects.filter(Q(area_id=areaSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
+    # if ((areaSelected == '405') and (dtSelected != '0') ):
+    #     print("if")
+    #     pw_data = MhDSdPw.objects.filter(Q(area_id=dtSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
+    # else:
+    pw_data = MhDSdPw.objects.filter(Q(area_id=areaSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
 
     ci_data = MhDSdCi.objects.filter(Q(area_id=areaSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
     cd_data = MhDSdCd.objects.filter(Q(area_id=areaSelected) & Q(financial_year=fy_name) & Q(month=monthSelected))
@@ -58,14 +61,17 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
     def post(self,request):
         username = request.user.username
         fy_name = request.POST['fy_select']
-      
+        print(fy_name)
         area_name = 1
         pw_data = MhDSdPw.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
         ci_data = MhDSdCi.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
         cd_data = MhDSdCd.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
 
         st_name = MhAreaDetails.objects.filter(Q(area_level = 3)).values('area_name', 'area_id').distinct().order_by('area_id')
-        dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+        if(fy_name == '2020-2021'):
+            dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+        else: 
+            dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).exclude(area_id=422).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
 
         areaName = MhAreaDetails.objects.filter(Q(area_parent_id__gte = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
 
@@ -82,7 +88,7 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
             'ci_data':ci_json,
             'cd_data':cd_json
         }
-        
+        # ,'phc_list':phc_name
         return render(request,'dashboard/dt_dashboard.html', {'st_list':st_name, 'dt_list':dt_name, 'areaData':areaList ,'dist_name':area_name, 'context':context, 'months':month_name, 'fy': fy_name})
 
 

@@ -57,32 +57,6 @@ class MhDSdPw(models.Model):
         managed = False
         db_table = 'mh_d_sd_pw'
 
-class MhDSdCi(models.Model):
-    financial_year = models.CharField(max_length=20, blank=True, null=True)
-    month = models.TextField(blank=True, null=True)  # This field type is a guess.
-    tot_chld_born = models.IntegerField(blank=True, null=True)
-    chld_immunzt_vit_k1 = models.IntegerField(blank=True, null=True)
-    chld_immunzt_bcg = models.IntegerField(blank=True, null=True)
-    chld_immunzt_9to11m_mr = models.IntegerField(blank=True, null=True)
-    chld_immunzt_vit_a_dose_1 = models.IntegerField(blank=True, null=True)
-    no_chld_12to59m_albendazole = models.IntegerField(blank=True, null=True)
-    chld_immunzt_dpt1_penta1 = models.IntegerField(blank=True, null=True)
-    chld_immunzt_dpt2_penta2 = models.IntegerField(blank=True, null=True)
-    chld_immunzt_dpt3_penta3 = models.IntegerField(blank=True, null=True)
-    per_chld_immunzt_vit_k1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_bcg = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_9to11m_mr = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_vit_a_dose_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_no_chld_12to59m_albendazole = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_dpt1_penta1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_dpt2_penta2 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    per_chld_immunzt_dpt3_penta3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    area_parent_id = models.IntegerField(blank=True, null=True)
-    area_id = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'mh_d_sd_ci'
 
 class MhDSdCd(models.Model):
     financial_year = models.CharField(max_length=20, blank=True, null=True)
@@ -110,4 +84,33 @@ class MhDSdCd(models.Model):
     class Meta:
         managed = False
         db_table = 'mh_d_sd_cd'
+
+
+class MhDSdCi(models.Model):
+    financial_year = models.CharField(max_length=20, blank=True, null=True)
+    month = models.TextField(blank=True, null=True)  # This field type is a guess.
+    tot_chld_born = models.IntegerField(blank=True, null=True)
+    chld_immunzt_vit_k1 = models.IntegerField(blank=True, null=True)
+    chld_immunzt_bcg = models.IntegerField(blank=True, null=True)
+    chld_immunzt_9to11m_mr = models.IntegerField(blank=True, null=True)
+    chld_immunzt_vit_a_dose_1 = models.IntegerField(blank=True, null=True)
+    no_chld_12to59m_albendazole = models.IntegerField(blank=True, null=True)
+    chld_immunzt_dpt1_penta1 = models.IntegerField(blank=True, null=True)
+    chld_immunzt_dpt2_penta2 = models.IntegerField(blank=True, null=True)
+    chld_immunzt_dpt3_penta3 = models.IntegerField(blank=True, null=True)
+    per_chld_immunzt_vit_k1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_bcg = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_9to11m_mr = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_vit_a_dose_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_no_chld_12to59m_albendazole = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_dpt1_penta1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_dpt2_penta2 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    per_chld_immunzt_dpt3_penta3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    area_parent_id = models.IntegerField(blank=True, null=True)
+    area_id = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mh_d_sd_ci'
+
         

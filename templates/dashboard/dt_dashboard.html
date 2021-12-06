@@ -133,6 +133,19 @@
                 </select>
             </div>
         </div>
+        <div class="phcList">
+            <div class="form-group">
+
+                <label class="d-inline-block ml-5" for="area_select">Select PHC:</label>
+                <select class="custom-select" name="area_select" id="areaPhc" style="width: auto">
+                    <option value="0" selected>Select</option>
+                    {% for dist_select in phc_list %}
+                    <option value="{{ dist_select.area_id }}">{{ dist_select.area_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
     </div>
 
 </form>
@@ -2528,9 +2541,7 @@
     function filterCSV(csv, key, value) {
         var result = [];
         csv.forEach(function (val, idx, arr) {
-
             if (val[key] == value)  {
-
                 result.push(val)
             }
         })
@@ -2539,15 +2550,15 @@
 
     let areaDetails = {{ areaData | safe }};
 
-    console.log(areaDetails, "areaData");
-
     $("#areaDt").change(function (e) {
         e.preventDefault();
          areaSelected = $('#areaDt').val();
          monthSelected = $('#month-1').val();
          $('#areaSubDt').empty();
+        $('#areaPhc').empty();
          let optionSelect = '<option value="0" selected>Select</option>';
          $('#areaSubDt').append(optionSelect);
+        $('#areaPhc').append(optionSelect);
         if(areaSelected != '0')
         {
          subdtList= filterCSV(areaDetails, 'area_parent_id', areaSelected)
@@ -2564,48 +2575,53 @@
          if(areaSelected == '405')
             areaSelected = 405;    
         makeAjaxCall(areaSelected, monthSelected);   
-
     });
 
-    // $("#project-1").change(function (e) {
-    //     areaSelected = $('#project-1').val();
-    //     monthSelected = $('#month-1').val();
-    //     area_type='Project';
-    //     e.preventDefault();
-    //     $('#beat-1').empty();
-    //     let optionAll = '<option value="All" selected="selected">All</option>';
-    //     $('#beat-1').append(optionAll);
-    //     if(areaSelected != 'All')
-    //     {
-    //      beatList= filterCSV(areaDetails, 'area_parent_id', areaSelected, 'area_type', 'Beat')
-    //      if(beatList.length > 0)
-    //                 {
-    //                     $.each(beatList, function(key, value) {   
-    //                         $('#beat-1')
-    //                             .append($('<option>', { value:value.area_id })
-    //                             .text(value.area_name)); 
-                                
-    //                          });   
-    //                 }
-    //     }
-    //     if(areaSelected == 'All')
-    //         areaSelected = $('#district-1').val();
-
-    //     makeAjaxCall(areaSelected, monthSelected);   
-
-    // });
-
     $("#areaSubDt").change(function (e) {
-         areaSelected = $('#areaSubDt').val();
+        areaSelected = $('#areaSubDt').val();
+        monthSelected = $('#month-1').val();
+        e.preventDefault();
+        $('#areaPhc').empty();
+        let optionSelect = '<option value="0" selected>Select</option>';
+        $('#areaPhc').append(optionSelect);
+        if(areaSelected != '0')
+        {
+            phcList= filterCSV(areaDetails, 'area_parent_id', areaSelected)
+         if(phcList.length > 0)
+                    {
+                        $.each(phcList, function(key, value) {   
+                            $('#areaPhc')
+                                .append($('<option>', { value:value.area_id })
+                                .text(value.area_name)); 
+                                
+                             });   
+                    }
+        }
+        if(areaSelected == '0')
+            areaSelected = $('#areaDt').val();
+
+        makeAjaxCall(areaSelected, monthSelected);   
+    });
+
+    $("#areaPhc").change(function (e) {
+         areaSelected = $('#areaPhc').val();
          monthSelected = $('#month-1').val();
         e.preventDefault();
         if(areaSelected == '0')
-            areaSelected = $('#areaDt').val();
+            areaSelected = $('#areaSubDt').val();
         makeAjaxCall(areaSelected, monthSelected);   
 
     });
 
     $("#month-1").change(function (e) {
+        areaSelected = $('#areaPhc').val();
+        if(areaSelected == '0'){
+            areaSelected = $('#areaSubDt').val();
+            if(areaSelected == '0'){
+                areaSelected = $('#areaDt').val();
+            }
+        }
+
         monthSelected = $('#month-1').val();
         e.preventDefault();
         makeAjaxCall(areaSelected, monthSelected);   
@@ -2621,6 +2637,7 @@
                 month: monthSelected
             },
             success: function (response) {
+                console.log(response, "response")
                 let pw_dataAjax = JSON.parse(response.context.pw_data);
                 let ci_dataAjax = JSON.parse(response.context.ci_data);
                 let cd_dataAjax = JSON.parse(response.context.cd_data);
@@ -2630,79 +2647,6 @@
             }
         });
     }
-
-    // $("#areaSt").change(function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "{% url 'ajaxArea' fy %}", // the endpoint
-    //         method: "GET", // http method
-    //         data: {
-    //             area: $('#areaSt').val(),
-    //             month: $('#month-1').val(),
-    //             area_district: $('#areaDt').val()
-    //         },
-    //         success: function (response) {
-    //             let pw_dataAjax = JSON.parse(response.context.pw_data);
-    //             let ci_dataAjax = JSON.parse(response.context.ci_data);
-    //             let cd_dataAjax = JSON.parse(response.context.cd_data);
-
-    //             let district = response.dist_name;
-    //             updateData(pw_dataAjax, ci_dataAjax, cd_dataAjax);
-    //         }
-    //     });
-
-    // });
-
-    // $("#month-1").change(function (e) {
-    //     areaSelected = $('#areaSt').val();
-    //     monthSelected = $('#month-1').val();
-    //     dtSelected = $('#areaDt').val();
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "{% url 'ajaxArea' fy %}", // the endpoint
-    //         method: "GET", // http method
-    //         data: {
-    //             area: $('#areaSt').val(),
-    //             month: $('#month-1').val(),
-    //             area_district: $('#areaDt').val()
-    //         },
-    //         success: function (response) {
-    //             let pw_dataAjax = JSON.parse(response.context.pw_data);
-    //             let ci_dataAjax = JSON.parse(response.context.ci_data);
-    //             let cd_dataAjax = JSON.parse(response.context.cd_data);
-
-    //             let district = response.dist_name;
-    //             updateData(pw_dataAjax, ci_dataAjax, cd_dataAjax);
-
-    //         }
-    //     });
-
-    // });
-
-    // $("#areaDt").change(function (e) {
-    //     areaSelected = $('#areaSt').val();
-    //     monthSelected = $('#month-1').val();
-    //     dtSelected = $('#areaDt').val();
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "{% url 'ajaxArea' fy %}", // the endpoint
-    //         method: "GET", // http method
-    //         data: {
-    //             area: $('#areaSt').val(),
-    //             month: $('#month-1').val(),
-    //             area_district: $('#areaDt').val()
-    //         },
-    //         success: function (response) {
-    //             let pw_dataAjax = JSON.parse(response.context.pw_data);
-    //             let ci_dataAjax = JSON.parse(response.context.ci_data);
-    //             let cd_dataAjax = JSON.parse(response.context.cd_data);
-    //             let district = response.dist_name;
-    //             updateData(pw_dataAjax, ci_dataAjax, cd_dataAjax);
-    //         }
-    //     });
-
-    // });
-
 
     data_from_django = {{ context.pw_data | safe }};
     var pw_data = []
@@ -2865,12 +2809,13 @@
 
 
     $(document).ready(function () {
-        $('#areaSt').bind('change', function () {
-            var elements = $('.dtList').children().hide(); // hide all the elements
+        $('#month-1').bind('change', function () {
             var value = $(this).val();
-            if (value == 405) { // if somethings' selected
-                elements.show(); // show the ones we want
+            var elements = $('.phcList').children().show(); // show the ones we want
+            if (value != 'All') { // if somethings' selected
+                elements.hide();  // hide all the elements
             }
+            
         }).trigger('change');
 
     });
