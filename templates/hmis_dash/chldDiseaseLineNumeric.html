@@ -176,10 +176,10 @@
   let selectedArea = "{{ dist_name }}";
   let areaName = [];
   let selectint = parseInt(selectedArea)
-  if (selectint > 440 )
-    areaName.push(441);  
-  else
-    areaName.push(405);
+  // if (selectint > 440 )
+  areaName.push(selectint);  
+  // else
+  //   areaName.push(405);
   let selectedYear = "{{fy}}";
 
   const svg = d3.select('#chart').append('svg').attr('id', 'svg1').attr('width', 1000)
@@ -553,17 +553,17 @@
   }
 
   function setSection(val) {
-    if (val == 'Total no of Children Born')
+    if (val == 'Childhood Diseases-Pneumonia')
       section = 'chld_disease_pneumonia';
-    else if (val == 'Child Immunisation-Vitamin K1(Birth Dose)')
+    else if (val == 'Childhood Diseases-Sepsis')
       section = 'chld_disease_sepsis';
-    else if (val == 'Child Immunisation-BCG')
+    else if (val == 'Childhood Diseases-Tuberculosis(TB)')
       section = 'chld_disease_tb';
-    else if (val == 'Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose')
+    else if (val == 'Childhood Diseases-Malaria')
       section = 'chld_disease_malaria';
-    else if (val == 'Child Immunisation(9-11 months)-Measles 1st Dose')
+    else if (val == 'Childhood Diseases-Diarrhoea')
       section = 'chld_disease_diarrhoea';
-    else if (val == 'Child immunisation-Vitamin A Dose-1')
+    else if (val == 'Childhood Diseases-Diarrhoea treated in Inpatients')
       section = 'chld_disease_diarrhoea_trtd_inpatnt';
     else if (val == 'Children admitted with upper respiratory infections')
       section = 'chld_admtd_upper_resp_infec';
@@ -620,10 +620,10 @@
 
   $(function () {
     //bind event
-    if (selectint > 440 )
-      $('#state').val(441);
-    else
-      $('#state').val(405);
+    // if (selectint > 440 )
+    $('#state').val(selectint);
+    // else
+    //   $('#state').val(405);
 
     // $('.state a').parents('.dropdown').find('.dropdown-toggle').html('All States' + ' <span class="selectedState"></span>');
 
