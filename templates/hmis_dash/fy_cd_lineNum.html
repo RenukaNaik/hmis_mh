@@ -180,10 +180,10 @@
     
     let areaName = [];
     let selectint = parseInt(sel_st)
-    if (selectint > 440 )
-        areaName.push(441);  
-    else
-        areaName.push(405);
+    // if (selectint > 440 )
+        areaName.push(selectint);  
+    // else
+    //     areaName.push(405);
         
     let selectedYear = [];
     selectedYear.push(sel_fy)
@@ -629,10 +629,10 @@
 
     $(function () {
         //bind event
-        if (selectint > 440 )
-            $('#state').val(441);
-        else
-            $('#state').val(405);
+        // if (selectint > 440 )
+            $('#state').val(selectint);
+        // else
+        //     $('#state').val(405);
         $('#fyList').val(sel_fy);
 
         $(".category a").click(function () {
