@@ -352,11 +352,11 @@ class chldDiseaseLineNumeric(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
 
         if dtint > 440:
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).order_by('month').exclude(month='All').values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=405)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
