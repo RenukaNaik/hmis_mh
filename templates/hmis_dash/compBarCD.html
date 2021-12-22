@@ -605,7 +605,7 @@
 
     var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
     filterdata = filterCSV(data, 'month', valMonth);
-    monthDataL = sortData(filterdata, sortByL);
+    monthDataL = sortData(filterdata, sortByR);
     drawLeft(monthDataL);
   }
 
@@ -639,7 +639,7 @@
 
     var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
     filterdata = filterCSV(data, 'month', valMonth);
-    monthDataR = sortData(filterdata, sortByR);
+    monthDataR = sortData(filterdata, sortByL);
     drawRight(monthDataR);
 
   });

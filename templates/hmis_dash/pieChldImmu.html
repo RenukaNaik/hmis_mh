@@ -513,6 +513,7 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
 
   monthSelect = tickLabels[$('#monthSlider').slider('getValue')]
   augData = filterCSV(data, 'month', monthSelect);
+  console.log(augData, "augData")
   render(augData);
 </script>
 

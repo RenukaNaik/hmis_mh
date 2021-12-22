@@ -67,12 +67,16 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
         ci_data = MhDSdCi.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
         cd_data = MhDSdCd.objects.filter(Q(area_id=405) & Q(financial_year=fy_name) & Q(month='All'))
 
-        st_name = MhAreaDetails.objects.filter(Q(area_level = 3)).values('area_name', 'area_id').distinct().order_by('area_id')
         if(fy_name == '2020-2021'):
-            dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
-        else: 
-            dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).exclude(area_id=422).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+            st_name = MhAreaDetails.objects.filter(Q(area_level = 3)).values('area_name', 'area_id').distinct().order_by('area_id')
+        else:
+            st_name = MhAreaDetails.objects.filter(Q(area_level = 3)).exclude(area_id = 422).values('area_name', 'area_id').distinct().order_by('area_id')
 
+        dt_name = MhAreaDetails.objects.filter(Q(area_parent_id = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+        
+        # if(fy_name == '2020-2021'):
+        #     areaName = MhAreaDetails.objects.filter(Q(area_parent_id__gte = 405)).exclude(area_id__gte = 611).exclude(area_id__lte = 634).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
+        # else:
         areaName = MhAreaDetails.objects.filter(Q(area_parent_id__gte = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
 
         month_name = MhDSdPw.objects.filter(Q(financial_year=fy_name)).values('month').distinct().order_by('month')

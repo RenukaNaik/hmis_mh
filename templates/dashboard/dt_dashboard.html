@@ -2822,7 +2822,7 @@
         $('#areaDt').bind('change', function () {
             var value = $(this).val();
             var elements = $('.phcList').children().show(); // show the ones we want
-            if (value != '405') { // if somethings' selected
+            if (value == '421' || value == '422') { // if somethings' selected
                 elements.hide();  // hide all the elements
             }
             

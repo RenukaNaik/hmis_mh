@@ -550,7 +550,7 @@
     st_data = filterCSV(data, 'area_id', areaName);
     d3.selectAll(".mouse-per-line circle").remove();
     setData(st_data, section);
-
+    console.log(st_data, "st_data");
   });
 
   let choices = parseURLParameters(window.location.href);
@@ -572,13 +572,13 @@
       section = 'early_anc_register';
     else if (val == 'PW received 4 or more ANC check ups')
       section = 'anc_4_or_more';
-    else if (val == 'PW given TT1')
+    else if (val == 'PW given TT1')
       section = 'pw_tt1_given';
     else if (val == 'TT1 to TT2 Dropout')
       section = 'pw_tt2_given';
     else if (val == 'PW given TT Booster as fraction of children born (or live births)')
       section = 'pw_tt_booster_given';
-    else if (val == 'PW given 360 Calcium tablets')
+    else if (val == 'PW given 360 Calcium tablets')
       section = 'pw_calcium';
     else if (val == 'PW given 180 Iron Folic Acid (IFA) tablets')
       section = 'pw_ifa';
