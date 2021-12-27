@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin 
-from django.conf.urls import url
+from django.conf.urls import re_path
 from dashboard.views import DashboardView, RegionOverview
 from hmis_dash.views import (HMISDashboardView, hmisBarChart, hmisLineChart, hmisBarNumericChart, hmisLineNumericChart,
     chldImmuBar, chldImmuLine, chldImmuBarNumeric, chldImmuLineNumeric, chldDiseaseBar, chldDiseaseLine, chldDiseaseBarNumeric,
@@ -26,52 +26,52 @@ from django.conf.urls.static import static
 from dashboard import views
 
 urlpatterns = [
-    url(r'^$', DashboardView.as_view(), name='home'),
-    url(r'^dashboard/$', RegionOverview.as_view(), name='overview'),
-    url(r'^(?P<fy>[-\w\ ]+)/dashboard/ajax/areaChange/$', views.create_post_area, name='ajaxArea'),   
-    url(r'^hmis_dash$', HMISDashboardView.as_view(), name='hmis_dash'),
+    re_path(r'^$', DashboardView.as_view(), name='home'),
+    re_path(r'^dashboard/$', RegionOverview.as_view(), name='overview'),
+    re_path(r'^(?P<fy>[-\w\ ]+)/dashboard/ajax/areaChange/$', views.create_post_area, name='ajaxArea'),   
+    re_path(r'^hmis_dash$', HMISDashboardView.as_view(), name='hmis_dash'),
 
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/barchart$', hmisBarChart.as_view(), name='barchart'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_line$', fyLine.as_view(), name='fy_line'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_lineNum$', fyLineNum.as_view(), name='fy_lineNum'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/linechart$', hmisLineChart.as_view(), name='linechart'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/barnumeric$', hmisBarNumericChart.as_view(), name='barnumeric'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/linenumeric$', hmisLineNumericChart.as_view(), name='linenumeric'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/pw_compbar$', CompBarPw.as_view(), name='pw_compbar'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/pw_compbarNum$', CompBarPwNumeric.as_view(), name='pw_compbarNumeric'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_compbar$', CompBarCd.as_view(), name='cd_compbar'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_compbarNum$', CompBarCdNumeric.as_view(), name='cd_compbarNumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/barchart$', hmisBarChart.as_view(), name='barchart'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_line$', fyLine.as_view(), name='fy_line'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_lineNum$', fyLineNum.as_view(), name='fy_lineNum'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/linechart$', hmisLineChart.as_view(), name='linechart'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/barnumeric$', hmisBarNumericChart.as_view(), name='barnumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/linenumeric$', hmisLineNumericChart.as_view(), name='linenumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/pw_compbar$', CompBarPw.as_view(), name='pw_compbar'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/pw_compbarNum$', CompBarPwNumeric.as_view(), name='pw_compbarNumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_compbar$', CompBarCd.as_view(), name='cd_compbar'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_compbarNum$', CompBarCdNumeric.as_view(), name='cd_compbarNumeric'),
 
 
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_bar$', chldImmuBar.as_view(), name='ci_bar'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_line$', chldImmuLine.as_view(), name='ci_line'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_barnumeric$', chldImmuBarNumeric.as_view(), name='ci_barnumeric'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_linenumeric$', chldImmuLineNumeric.as_view(), name='ci_linenumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_bar$', chldImmuBar.as_view(), name='ci_bar'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_line$', chldImmuLine.as_view(), name='ci_line'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_barnumeric$', chldImmuBarNumeric.as_view(), name='ci_barnumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_linenumeric$', chldImmuLineNumeric.as_view(), name='ci_linenumeric'),
     
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_bar$', chldDiseaseBar.as_view(), name='cd_bar'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_line$', chldDiseaseLine.as_view(), name='cd_line'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_barnumeric$', chldDiseaseBarNumeric.as_view(), name='cd_barnumeric'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_linenumeric$', chldDiseaseLineNumeric.as_view(), name='cd_linenumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_bar$', chldDiseaseBar.as_view(), name='cd_bar'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_line$', chldDiseaseLine.as_view(), name='cd_line'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_barnumeric$', chldDiseaseBarNumeric.as_view(), name='cd_barnumeric'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_linenumeric$', chldDiseaseLineNumeric.as_view(), name='cd_linenumeric'),
 
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/tableOverview$', hmisTableChart.as_view(), name='tablechart'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/stlvl_pie$', pieStateLevel.as_view(), name='stlvl_pie'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_pie$', pieChildImmu.as_view(), name='ci_pie'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_pie$', pieChildDisease.as_view(), name='cd_pie'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/tableOverview$', hmisTableChart.as_view(), name='tablechart'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/stlvl_pie$', pieStateLevel.as_view(), name='stlvl_pie'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/ci_pie$', pieChildImmu.as_view(), name='ci_pie'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/cd_pie$', pieChildDisease.as_view(), name='cd_pie'),
 
-    url(r'^(?P<fy>[-\w\ ]+)/hmis_dash/pw_map$', mapStPW.as_view(), name='pw_map'),
-    url(r'^(?P<fy>[-\w\ ]+)/hmis_dash/cd_map$', mapStChldDisease.as_view(), name='cd_map'),
-    url(r'^(?P<fy>[-\w\ ]+)/hmis_dash/ci_map$', mapStChldImmu.as_view(), name='ci_map'),
+    re_path(r'^(?P<fy>[-\w\ ]+)/hmis_dash/pw_map$', mapStPW.as_view(), name='pw_map'),
+    re_path(r'^(?P<fy>[-\w\ ]+)/hmis_dash/cd_map$', mapStChldDisease.as_view(), name='cd_map'),
+    re_path(r'^(?P<fy>[-\w\ ]+)/hmis_dash/ci_map$', mapStChldImmu.as_view(), name='ci_map'),
 
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_ci_line$', fyChldImmuLine.as_view(), name='fy_ci_line'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_ci_lineNum$', fyChldImmuLineNum.as_view(), name='fy_ci_lineNum'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_ci_line$', fyChldImmuLine.as_view(), name='fy_ci_line'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_ci_lineNum$', fyChldImmuLineNum.as_view(), name='fy_ci_lineNum'),
 
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_cd_line$', fyChldDiseaseLine.as_view(), name='fy_cd_line'),
-    url(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_cd_lineNum$', fyChldDiseaseLineNum.as_view(), name='fy_cd_lineNum'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_cd_line$', fyChldDiseaseLine.as_view(), name='fy_cd_line'),
+    re_path(r'^(?P<dist_name>[-\w]+)/(?P<fy>[-\w\ ]+)/hmis_dash/fy_cd_lineNum$', fyChldDiseaseLineNum.as_view(), name='fy_cd_lineNum'),
 
 
-    url(r'^admin/', admin.site.urls),
-    url(r'^login/', views.login_request, name='login'),
-    url(r'^logout/', views.logout_request, name='logout'),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^login/', views.login_request, name='login'),
+    re_path(r'^logout/', views.logout_request, name='logout'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

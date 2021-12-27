@@ -177,10 +177,11 @@
   let selectedArea = "{{ dist_name }}";
   let areaName = [];
   let selectint = parseInt(selectedArea)
-  if (selectint > 440 )
-    areaName.push(441);  
-  else
-    areaName.push(405);
+  
+  // if (selectint > 440 )
+  areaName.push(selectint);  
+  // else
+    // areaName.push(405);
   let selectedYear = "{{fy}}";
 
   const svg = d3.select('#chart').append('svg').attr('id', 'svg1').attr('width', 1000)
@@ -627,10 +628,10 @@
 
   $(function () {
     //bind event
-    if (selectint > 440 )
-      $('#state').val(441);
-    else
-      $('#state').val(405);
+    // if (selectint > 440 )
+    $('#state').val(selectint);
+    // else
+    //   $('#state').val(405);
 
     // $('.state a').parents('.dropdown').find('.dropdown-toggle').html('All States' + ' <span class="selectedState"></span>');
 

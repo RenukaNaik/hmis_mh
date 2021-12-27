@@ -155,11 +155,11 @@ class hmisLineNumericChart(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).order_by('month').exclude(month='All').values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=405)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -180,7 +180,9 @@ class chldImmuBar(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -229,8 +231,11 @@ class chldImmuBarNumeric(LoginRequiredMixin, TemplateView):
         district = request.GET.get('dist_name', dist_name) 
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
+        
         if dtint > 440:
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -280,7 +285,9 @@ class chldDiseaseBar(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -328,7 +335,9 @@ class chldDiseaseBarNumeric(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -447,7 +456,9 @@ class pieChildImmu(LoginRequiredMixin, TemplateView):
         fy_name = request.GET.get('fy', fy) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCiPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCiPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCiPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -470,7 +481,9 @@ class pieChildDisease(LoginRequiredMixin, TemplateView):
         dtint = int(district)
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCdPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCdPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCdPie.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -705,7 +718,9 @@ class CompBarPw(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -728,7 +743,9 @@ class CompBarPwNumeric(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -750,7 +767,9 @@ class CompBarCd(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())
@@ -772,7 +791,9 @@ class CompBarCdNumeric(LoginRequiredMixin, TemplateView):
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=405)).values())
+            area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
+            areaParentId = area_parent[0].area_parent_id
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).values())
             
         else:    
             data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=22)).values())

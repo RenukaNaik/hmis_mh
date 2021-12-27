@@ -64,6 +64,10 @@
   .drilldown{
   color: #007FBB;
 }
+.textLabel { 
+    font-size: calc(1% + 0.4vw + 0.4vh);
+    font-weight: bold;
+  }
 </style>
 {% endblock %}
 {% block feature %}
@@ -219,11 +223,11 @@
 
   const g = svg.append("g");
 
-  var mercator = d3
-    .geoMercator()
-    .scale(1);
+  //var mercator = d3
+  // .geoMercator()
+  //  .scale(1);
 
-  const pathGenerator = d3.geoPath().projection(mercator);
+  //const pathGenerator = d3.geoPath().projection(mercator);
   let choices = parseURLParameters(window.location.href);
   let selectedCategory = "Child Immunisation-Vitamin K1(Birth Dose)";
   selectedCategory.replace(/ /g, '_');
@@ -268,7 +272,7 @@
     };
     let path;
     let pathEnter;
-    // let textLabel;
+    let textLabel;
 
     const updateviz = (selectedCat) => {
         //update tooltip
@@ -395,6 +399,17 @@
 
     //makemap
     const makemap = (geojson, tdata) => {
+      let geojson2 = {
+                "type": "FeatureCollection",
+                "features": geojson
+            };
+
+      
+      mercator = d3.geoMercator()
+          .fitSize([innerWidth, innerHeight], geojson2);
+
+      pathGenerator = d3.geoPath().projection(mercator); 
+      
       d3.select('.info-hirar').text(function () {
         let hirarchy = "Maharashtra";
         let displayAreaName = geojson[0].properties.district
@@ -415,12 +430,12 @@
       // } else if (level == 2 && direction == 0) {
       //   TextValue = d => d.properties.beat_na;
       // } 
-      // else if (level == 1 && direction == 0) {
-      //   TextValue = d => d.properties.district;
-      // } 
-      // else if (level == 0 && direction == 0) {
-      //   TextValue = d => d.properties.state;
-      // }
+       else if (level == 1 && direction == 0) {
+         TextValue = d => d.properties.block;
+       } 
+       else if (level == 0 && direction == 0) {
+         TextValue = d => d.properties.district;
+       }
       let min = d3.min(geojson, ColorValue);
       let max = d3.max(geojson, ColorValue);
       let comp = (max - min) / 3;
@@ -464,33 +479,36 @@
         });
 
       //text over polygon
-      //  textLabel = g
-      //   .selectAll("text")
-      //   .data(geojson)
-      //   .enter()
-      //   .append("text")
-      //   .text(d => {
-      //     if (level !== 3) {
-      //       return `${TextValue(d)}`;
-      //     } else {
-      //       return "";
-      //     }
-      //   })
-      //   .attr("x", function (d) {
-      //     return pathGenerator.centroid(d)[0];
-      //   })
-      //   .attr("y", function (d) {
-      //     return pathGenerator.centroid(d)[1];
-      //   })
-      //   .attr("text-anchor", "middle")
-      //   .attr("font-family", "sans-serif");
+        textLabel = g
+         .selectAll("text")
+         .data(geojson)
+         .enter()
+         .append("text")
+         .text(d => {
+           if (level !== 3) {
+             return `${TextValue(d)}`;
+           } else {
+             return "";
+           }
+         })
+         .attr("x", function (d) {
+           return pathGenerator.centroid(d)[0];
+         })
+         .attr("y", function (d) {
+           return pathGenerator.centroid(d)[1];
+         })
+         .attr("text-anchor", "middle")
+         .attr("font-family", "sans-serif");
 
-      // if (level === 0) {
-      //   textLabel.attr("font-size", "0.4em").attr("font-weight", "bold");
-      // } 
-      // else if (level === 1) {
-      //   textLabel.attr("font-size", "1em").attr("font-weight", "bold");
-      // } else if (level === 2) {
+       if (level === 0) {
+        console.log(level, "level")
+        textLabel.attr('class','textLabel');
+       } 
+       else if (level === 1) {
+        console.log(level, "level")
+        textLabel.attr('class','textLabel');
+      }
+      // else if (level === 2) {
       //   textLabel.attr("font-size", "0.38em").attr("font-weight", "bold");
       // }
 
@@ -661,14 +679,14 @@
             }
           });
 
-        // textLabel
-        //   .text(d => {
-        //   if(level !== 3)
-        //     return `${TextValue(d)}`;
+         textLabel
+           .text(d => {
+           if(level !== 3)
+             return `${TextValue(d)}`;
 
-        //   })
-          // .exit()
-          // .remove();
+           })
+           .exit()
+           .remove();
       }
 
       // let updatepoints = (geojson) => {
@@ -816,19 +834,19 @@ d3.select(".back-button").on("click", function () {
           rowEnter.selectAll("*").remove();
           g.selectAll("*").remove();
           let svgTrans = svg.transition().duration(transitionDuration);
-          // calculation for zoom
-          let transLength = zoomBox.translate.length;
-          let scaleLength = zoomBox.scale.length;
-          let transX, transY, scaleV;
-          if (level !== 0) {
-            transX = zoomBox.translate[transLength - 1][0];
-            transY = zoomBox.translate[transLength - 1][1];
-            scaleV = zoomBox.scale[scaleLength - 1];
-          }
-          if (level === 0)
-            svgTrans.call(zzoom.transform, d3.zoomIdentity);
-          else
-            svgTrans.call(zzoom.transform, d3.zoomIdentity.translate(transX, transY).scale(scaleV))
+          //  calculation for zoom
+          //  let transLength = zoomBox.translate.length;
+          //  let scaleLength = zoomBox.scale.length;
+          //  let transX, transY, scaleV;
+          //  if (level !== 0) {
+          //    transX = zoomBox.translate[transLength - 1][0];
+          //    transY = zoomBox.translate[transLength - 1][1];
+          //    scaleV = zoomBox.scale[scaleLength - 1];
+          //  }
+          //  if (level === 0)
+          //    svgTrans.call(zzoom.transform, d3.zoomIdentity);
+          //  else
+          //    svgTrans.call(zzoom.transform, d3.zoomIdentity.translate(transX, transY).scale(scaleV))
 
           updateCategory("Child Immunisation-Vitamin K1(Birth Dose)");
           let LocationMonth, LocationDataMonth;
@@ -868,15 +886,15 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
   g.selectAll("*").remove();
   rowEnter.selectAll("*").remove();
   let svgTrans = svg.transition().duration(transitionDuration);
-          // calculation for zoom
-          let transLength = zoomBox.translate.length;
-          let scaleLength = zoomBox.scale.length;
-          let transX, transY, scaleV;
-          if (level !== 0) {
-            transX = zoomBox.translate[transLength - 1][0];
-            transY = zoomBox.translate[transLength - 1][1];
-            scaleV = zoomBox.scale[scaleLength - 1];
-          }
+          //  calculation for zoom
+          //  let transLength = zoomBox.translate.length;
+          //  let scaleLength = zoomBox.scale.length;
+          //  let transX, transY, scaleV;
+          //  if (level !== 0) {
+          //    transX = zoomBox.translate[transLength - 1][0];
+          //    transY = zoomBox.translate[transLength - 1][1];
+          //    scaleV = zoomBox.scale[scaleLength - 1];
+          //  }
           
           if (level === 0) {
             LocationDataMonth = filterCSV(stData, 'month', month_hack);
@@ -952,7 +970,7 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
         if (level < 3) {
           level++;
           direction = 1;
-          zoomToBoundingBox(d);
+          //   zoomToBoundingBox(d);
           let clickedLocation;
           if (level === 1) {
             clickedLocation = d.properties.area_id;
@@ -1111,28 +1129,28 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
         return selection;
       };
 	  
-	    const zoomToBoundingBox = d => {
-        let bounds = pathGenerator.bounds(d),
-          dx = bounds[1][0] - bounds[0][0],
-          dy = bounds[1][1] - bounds[0][1],
-          x = (bounds[0][0] + bounds[1][0]) / 2,
-          y = (bounds[0][1] + bounds[1][1]) / 2,
-          scale = Math.max(
-            1,
-            Math.min(8, 0.9 / Math.max(dx / innerWidth, dy / innerHeight))
-          ),
-          translate = [innerWidth / 2 - scale * x, innerHeight / 2 - scale * y];
-        zoomBox['translate'].push(translate);
-        zoomBox['scale'].push(scale);
-        svg
-          .transition()
-          .duration(transitionDuration)
-          .call(
-            zzoom.transform,
-            d3.zoomIdentity.translate(translate[0], translate[1])
-              .scale(scale)
-          );
-      };
+	    // const zoomToBoundingBox = d => {
+      //   let bounds = pathGenerator.bounds(d),
+      //      dx = bounds[1][0] - bounds[0][0],
+      //      dy = bounds[1][1] - bounds[0][1],
+      //      x = (bounds[0][0] + bounds[1][0]) / 2,
+      //      y = (bounds[0][1] + bounds[1][1]) / 2,
+      //      scale = Math.max(
+      //        1,
+      //        Math.min(8, 0.9 / Math.max(dx / innerWidth, dy / innerHeight))
+      //      ),
+      //      translate = [innerWidth / 2 - scale * x, innerHeight / 2 - scale * y];
+      //    zoomBox['translate'].push(translate);
+      //    zoomBox['scale'].push(scale);
+      //    svg
+      //      .transition()
+      //      .duration(transitionDuration)
+      //      .call(
+      //        zzoom.transform,
+      //        d3.zoomIdentity.translate(translate[0], translate[1])
+      //          .scale(scale)
+      //      );
+      //  };
    
     //initial map
 let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]
@@ -1144,62 +1162,84 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
 
   async function fetchGeoJSON() {
     let geoJSONBundle = {};
-    let scaleCenter;
-//     var blockJSON = {{ context.blk_geodata| safe }};
-//   scaleCenter = calculateScaleCenter(blockJSON);
+    let dtJsonFt, subdtJsonFt;
 
+    // , beatJsonFt;
+
+        const promise1 = new Promise((resolve, reject) => {
+            let districtJSON = d3.json("{% static 'hmis_dash/json/mh_dt_geojson_181121.json' %}");
+            resolve(districtJSON);
+        });
+
+        const promise2 = new Promise((resolve, reject) => {
+            let subdtJSON = d3.json("{% static 'hmis_dash/json/mh_sub_dt_equi2hmis071221.json' %}");
+            resolve(subdtJSON);
+        });
+
+        // const promise3 = new Promise((resolve, reject) => {
+        //     let beatJSON = d3.json("{% static 'kyd_dashboard/json/palghar_beat_geojson_151121.json' %}");
+        //     resolve(beatJSON);
+        // });
+
+        Promise.all([
+            promise1, promise2
+            // , promise3
+        ]).then(function (responses) {
+            let dtObject = responses[0].objects.mh_dt_geojson_181121;
+            let prjtObject = responses[1].objects.mh_sub_dt_equi2hmis071221;
+            // let beatObject = responses[2].objects.palghar_beat_geojson_151121;
+            
+            let dtFeatures, subdtFeatures;
+            // , beatFeatures;
+
+            dtFeatures = topojson.feature(responses[0], dtObject);
+
+            dtJsonFt = dtFeatures.features;
+
+            //Project
+            subdtFeatures = topojson.feature(responses[1], prjtObject);
+            subdtJsonFt = subdtFeatures.features;
+
+            //Beat
+            // beatFeatures = topojson.feature(responses[2], beatObject);
+            // beatJsonFt = beatFeatures.features;
+
+            let dtJSON = dtJsonFt;
+            let subdtJSON = subdtJsonFt;
+            // let beatJSON = beatJsonFt;
+
+            geoJSONBundle.dtJSON = dtJSON;
+            geoJSONBundle.subdtJSON = subdtJSON;
+            // geoJSONBundle.beatJSON = beatJSON;
+
+            mergeData(geoJSONBundle)
+
+        });
   
-
-//   var projectJSON = {{ context.prjt_geodata| safe }};
-//   scaleCenter = calculateScaleCenter(projectJSON);
-
-  let stJSON = {{ context.st_geodata| safe }};
-
-  // console.log("ST GeoJSON", stJSON )
-  scaleCenter = calculateScaleCenter(stJSON);
-
-  mercator.scale(scaleCenter.scale)
-    .center(scaleCenter.center)
-    .translate([innerWidth / 2, innerHeight / 2]);
-
-  let dtJSON = {{ context.dt_geodata| safe }};
-  // console.log("ST GeoJSON", dtJSON )
-  scaleCenter = calculateScaleCenter(dtJSON);
-
-
-//   geoJSONBundle.blockJSON = blockJSON.features;
-//   geoJSONBundle.projectJSON = projectJSON.features;
-  geoJSONBundle.stJSON = stJSON.features;
-  geoJSONBundle.dtJSON = dtJSON.features;
-
-
-  return geoJSONBundle;
 }
+  // function calculateScaleCenter(features) {
 
-  function calculateScaleCenter(features) {
+  //   var bbox_path = pathGenerator.bounds(features),
+  //     scale = 0.95 / Math.max(
+  //       (bbox_path[1][0] - bbox_path[0][0]) / innerWidth,
+  //       (bbox_path[1][1] - bbox_path[0][1]) / innerHeight
+  //     );
+  //   var bbox_feature = d3.geoBounds(features),
+  //     center = [
+  //       (bbox_feature[1][0] + bbox_feature[0][0]) / 2,
+  //       ((bbox_feature[1][1] + bbox_feature[0][1]) / 2)];
 
-    var bbox_path = pathGenerator.bounds(features),
-      scale = 0.95 / Math.max(
-        (bbox_path[1][0] - bbox_path[0][0]) / innerWidth,
-        (bbox_path[1][1] - bbox_path[0][1]) / innerHeight
-      );
-    var bbox_feature = d3.geoBounds(features),
-      center = [
-        (bbox_feature[1][0] + bbox_feature[0][0]) / 2,
-        ((bbox_feature[1][1] + bbox_feature[0][1]) / 2)];
-
-    return {
-      'scale': scale,
-      'center': center
-    };
-  }
+  //   return {
+  //     'scale': scale,
+  //     'center': center
+  //   };
+  // }
 
   const monthWiseCSV = data => {
     data.forEach(d => {
-    //   if (d.project_n) d.project_n = d.project_n;
-    //   if (d.awc_with_code) d.awc_with_code = d.awc_with_code;
-      // d.block_n = d.block_n;
-      d.per_chld_immunzt_vit_k1 = +d.per_chld_immunzt_vit_k1;
+    
+
+        d.per_chld_immunzt_vit_k1 = +d.per_chld_immunzt_vit_k1;
         d.per_chld_immunzt_bcg = +d.per_chld_immunzt_bcg;
         d.per_chld_immunzt_9to11m_mr = +d.per_chld_immunzt_9to11m_mr;
         d.per_chld_immunzt_9to11m_measl_1st_dose = +d.per_chld_immunzt_9to11m_measl_1st_dose;
@@ -1279,34 +1319,9 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
     return geojson;
   };
   async function mergeData(geoJSON) {
-    //merging block data
-//     let blockGeoJSON = geoJSON.blockJSON;
 
-//     data_from_django = {{ context.block_data | safe }};
-//   var data = []
-//   data_from_django.forEach(element => {
-//     data.push(element.fields);
-//   });
-//   let blockCSV = data;
-//   monthWiseCSV(blockCSV);
-
-//   let blockGeoJSONAug = JSON.parse(JSON.stringify(blockGeoJSON));
-
-//   //merging project data
-//   let projectGeoJSON = geoJSON.projectJSON;
-//   /////
-//   data_from_django = {{ context.project_data | safe }};
-//   var data = []
-//   data_from_django.forEach(element => {
-//     data.push(element.fields);
-//   });
-//   let projectCSV = data;
-//   monthWiseCSV(projectCSV);
-
-//   let projectGeoJSONAug = JSON.parse(JSON.stringify(projectGeoJSON));
-
-  //merging state data
-  let stGeoJSON = geoJSON.stJSON;
+  //merging district data
+  let dtGeoJSON = geoJSON.dtJSON;
   data_from_django = {{ context.st_data | safe }};
   var data = []
   data_from_django.forEach(element => {
@@ -1314,9 +1329,12 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
   });
   let stCSV = data;
   monthWiseCSV(stCSV);
-  let stGeoJSONAug = JSON.parse(JSON.stringify(stGeoJSON));
 
-  let dtGeoJSON = geoJSON.dtJSON;
+  let dtGeoJSONAug = JSON.parse(JSON.stringify(dtGeoJSON));
+
+  //merging sub-district data
+
+  let subdtGeoJSON = geoJSON.subdtJSON;
 
   data_from_django = {{ context.dt_data | safe }};
   var data = []
@@ -1325,21 +1343,18 @@ let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
   });
   let dtCSV = data;
   monthWiseCSV(dtCSV);
-  let dtGeoJSONAug = JSON.parse(JSON.stringify(dtGeoJSON));
 
-
+  let subdtGeoJSONAug = JSON.parse(JSON.stringify(subdtGeoJSON));
 
   render(
+    subdtGeoJSONAug,
     dtGeoJSONAug,
-    // projectGeoJSONAug,
-    stGeoJSONAug,
     dtCSV,
-    // projectCSV,
     stCSV
   );
-}
+} 
 
-fetchGeoJSON().then(mergeData);
+fetchGeoJSON();
 
   $(function () {
     //bind event
