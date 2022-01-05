@@ -181,13 +181,16 @@
   let choices = parseURLParameters(window.location.href);
 
   let arcInitial = d => d.per_chld_immunzt_vit_k1;
-  let arcInitialNum = d => d.chld_disease_pneumonia;
+  let arcInitialNum = d => d.chld_immunzt_vit_k1;
 
     const setArcInitial = opt =>
     {
       if (opt == 'Child Immunisation-Vitamin K1(Birth Dose)') {
         arcInitial = d => d.per_chld_immunzt_vit_k1;
         arcInitialNum = d => d.chld_immunzt_vit_k1;
+      } else if (opt == 'Child Immunisation-BCG') {
+        arcInitial = d => d.per_chld_born;
+        arcInitialNum = d => d.tot_chld_born;
       } else if (opt == 'Child Immunisation-BCG') {
         arcInitial = d => d.per_chld_immunzt_bcg;
         arcInitialNum = d => d.chld_immunzt_bcg;

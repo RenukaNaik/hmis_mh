@@ -77,16 +77,16 @@
       </button>
 
       <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
-
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-      </div>
+        <a class="dropdown-item" href="#">Total no of Children Born</a>
+        <a class="dropdown-item" href="#">Child Immunisation-Vitamin K1(Birth Dose)</a>
+        <a class="dropdown-item" href="#">Child Immunisation-BCG</a>
+        <a class="dropdown-item" href="#">Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose</a>
+        <a class="dropdown-item" href="#">Child immunisation-Vitamin A Dose-1</a>
+        <a class="dropdown-item" href="#">Children(12-59 months) provided Albendazole</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 1st dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 2nd dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 3rd dose</a>
+    </div>
 
 
 
@@ -109,18 +109,17 @@
 
       </button>
 
-      <div class="dropdown-menu category2" aria-labelledby="dropdownMenuButton">
-
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-
-      </div>
+      <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Total no of Children Born</a>
+        <a class="dropdown-item" href="#">Child Immunisation-Vitamin K1(Birth Dose)</a>
+        <a class="dropdown-item" href="#">Child Immunisation-BCG</a>
+        <a class="dropdown-item" href="#">Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose</a>
+        <a class="dropdown-item" href="#">Child immunisation-Vitamin A Dose-1</a>
+        <a class="dropdown-item" href="#">Children(12-59 months) provided Albendazole</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 1st dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 2nd dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 3rd dose</a>
+    </div>
     </div>
   </div>
 
@@ -159,15 +158,15 @@
 
 <script>
 
-  const width = 700;
+  const width = 1400;
   const height = 1500;
 
 
   const tansitionDuration = 500;
 
-  const bar1 = d3.select('#b1').append("svg").attr('id', 'svg1').attr('width', 700).attr('height', 1600).call(responsivefy);
+  const bar1 = d3.select('#b1').append("svg").attr('id', 'svg1').attr('width', 1400).attr('height', 1600).call(responsivefy);
 
-  const bar2 = d3.select('#b2').append("svg").attr('id', 'svg2').attr('width', 700).attr('height', 1600).call(responsivefy);
+  const bar2 = d3.select('#b2').append("svg").attr('id', 'svg2').attr('width', 1400).attr('height', 1600).call(responsivefy);
 
 
   function responsivefy(svg) {
@@ -203,12 +202,12 @@
     }
   }
 
-  let sortByL = 'per_chld_disease_pneumonia';
+  let sortByL = 'tot_chld_born';
 
-  let sortByR = 'per_chld_disease_pneumonia';
+  let sortByR = 'tot_chld_born';
 
-  let xValue = d => d.per_chld_disease_pneumonia;
-  let xValueR = d => d.per_chld_disease_pneumonia;
+  let xValue = d => d.tot_chld_born;
+  let xValueR = d => d.tot_chld_born;
 
   let stateSelected = '{{ dist_name }}';
 
@@ -254,16 +253,18 @@
 
   const drawLeft = data => {
 
-    const xScaleLeft = d3.scaleLinear().domain([0, 1.2 * (d3.max(data, xValue))]).range([0, innerWidthLeft]);
+    const xScaleLeft = d3.scaleLinear().domain([0,(d3.max(data, xValue))]).range([0, innerWidthLeft]);
 
     const yScale = d3.scaleBand().range([bar_height * data.length, 0]).padding(0.1);
     yScale.domain(data.map(yValue))
 
     let getColor;
 
-      getColor = d3.scaleSequential().domain([d3.max(data, xValue), d3.min(data, xValue)])
-      
+    
+      getColor = d3.scaleSequential().domain([d3.min(data, xValue), d3.max(data, xValue)])
+
         .interpolator(d3.interpolateRdYlGn);
+    
 
     let chart = g1.selectAll("rect").data(data)
 
@@ -284,7 +285,7 @@
           .duration(200)
           .style("opacity", 0.9);
         tooltip
-          .html(d.area_name + " : " + (xValue(d).toFixed(2)))
+          .html(d.area_name + " : " + (xValue(d).toFixed(0)))
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 30 + "px");
       })
@@ -299,7 +300,7 @@
     chartText.enter().append('text')
       .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
 
-      .text(d => xValue(d).toFixed(2))
+      .text(d => xValue(d).toFixed(0))
 
       .attr('x', d => xScaleLeft(xValue(d))+ 5)
 
@@ -325,15 +326,16 @@
     chartText.transition().duration(tansitionDuration)
       .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
 
-      .text(d => xValue(d).toFixed(2))
+      .text(d => xValue(d).toFixed(0))
 
       .attr('x', d => xScaleLeft(xValue(d)))
 
       .attr('y', d => yScale(d.area_name) + yScale.bandwidth() / 2);
 
     let xaxisLeft = g1.append('g').call(d3.axisBottom(xScaleLeft))
+    // .tickFormat(d3.format("s"))
 
-      .attr('transform', `translate(0, ${bar_height * data.length})`)
+      .attr('transform', `translate(0, ${bar_height * data.length})`);
 
     xaxisLeft.selectAll("text").attr("font-size", "12px")
       .attr("font-weight", "bold")
@@ -368,7 +370,7 @@
 
   const drawRight = data => {
     // $(".highlighted_bar").remove();
-    const xScaleRight = d3.scaleLinear().domain([0, 1.2 * (d3.max(data, xValueR))]).range([0, innerWidthRight]);
+    const xScaleRight = d3.scaleLinear().domain([0, d3.max(data, xValueR)]).range([0, innerWidthRight]);
 
     const yScale = d3.scaleBand().range([bar_height * data.length, 0]).padding(0.1);
 
@@ -376,9 +378,10 @@
 
     let getColor;
 
-      getColor = d3.scaleSequential().domain([d3.max(data, xValueR), d3.min(data, xValueR)])
+    
+      getColor = d3.scaleSequential().domain([d3.min(data, xValueR), d3.max(data, xValueR)])
         .interpolator(d3.interpolateRdYlGn);
-   
+    
 
     let chart = g2.selectAll("rect").data(data)
 
@@ -404,7 +407,7 @@
           .duration(200)
           .style("opacity", 0.9);
         tooltip
-          .html(d.area_name + " : " + (xValueR(d).toFixed(2)))
+          .html(d.area_name + " : " + (xValueR(d).toFixed(0)))
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 30 + "px");
       })
@@ -418,7 +421,7 @@
     chartText.enter().append('text')
       .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
 
-      .text(d => xValueR(d).toFixed(2))
+      .text(d => xValueR(d).toFixed(0))
 
       .attr('x', d => xScaleRight(xValueR(d)) + 5)
 
@@ -449,7 +452,7 @@
     chartText.transition().duration(tansitionDuration)
       .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
 
-      .text(d => xValueR(d).toFixed(2))
+      .text(d => xValueR(d).toFixed(0))
 
       .attr('x', d => xScaleRight(xValueR(d)))
 
@@ -508,36 +511,21 @@
   var data = []
 
   data_from_django.forEach(element => {
-    if (element.per_chld_disease_pneumonia > 200)
-            element.per_chld_disease_pneumonia = 200;
-        if (element.per_chld_disease_sepsis > 200)
-            element.per_chld_disease_sepsis = 200;
-        if (element.per_chld_disease_tb > 200)
-            element.per_chld_disease_tb = 200;
-        if (element.per_chld_disease_malaria > 200)
-            element.per_chld_disease_malaria = 200;
-        if (element.per_chld_disease_diarrhoea > 200)
-            element.per_chld_disease_diarrhoea = 200;
-        if (element.per_chld_disease_diarrhoea_trtd_inpatnt > 200)
-            element.per_chld_disease_diarrhoea_trtd_inpatnt = 200;
-        if (element.per_chld_admtd_upper_resp_infec > 200)
-            element.per_chld_admtd_upper_resp_infec = 200;
-        if (element.per_chld_disease_sam > 200)
-            element.per_chld_disease_sam = 200;
-
         data.push(element);
     });
 
   data.forEach(d => {
-    d.per_chld_disease_pneumonia = +d.per_chld_disease_pneumonia;
-        d.per_chld_disease_sepsis = +d.per_chld_disease_sepsis;
-        d.per_chld_disease_tb = +d.per_chld_disease_tb;
-        d.per_chld_disease_malaria = +d.per_chld_disease_malaria;
-        d.per_chld_disease_diarrhoea = +d.per_chld_disease_diarrhoea;
-        d.per_chld_disease_diarrhoea_trtd_inpatnt = +d.per_chld_disease_diarrhoea_trtd_inpatnt;
-        d.per_chld_admtd_upper_resp_infec = +d.per_chld_admtd_upper_resp_infec;
-        d.per_chld_disease_sam = +d.per_chld_disease_sam;
-        d.area_id = d.area_id;
+        d.tot_chld_born = +d.tot_chld_born;
+        d.chld_immunzt_vit_k1 = +d.chld_immunzt_vit_k1;
+        d.chld_immunzt_bcg = +d.chld_immunzt_bcg;
+        d.chld_immunzt_9to11m_mr = +d.chld_immunzt_9to11m_mr;
+        d.chld_immunzt_9to11m_measl_1st_dose = +d.chld_immunzt_9to11m_measl_1st_dose;
+        d.chld_immunzt_vit_a_dose_1 = +d.chld_immunzt_vit_a_dose_1;
+        d.no_chld_12to59m_albendazole = +d.no_chld_12to59m_albendazole;
+        d.chld_immunzt_dpt1_penta1 = +d.chld_immunzt_dpt1_penta1;
+        d.chld_immunzt_dpt2_penta2 = +d.chld_immunzt_dpt2_penta2;
+        d.chld_immunzt_dpt3_penta3 = +d.chld_immunzt_dpt3_penta3;
+        d.area_id = +d.area_id;
         d.area_name = d.area_name;
         d.month = d.month;
         d.financial_year = d.financial_year;
@@ -570,25 +558,26 @@
   {
     var displayVal = valCategory.substring(0, valCategory.length);
         let fy = '{{ fy }}';
-        document.getElementById('barTitle').innerHTML = "(%) Indicator: " + displayVal + " (" + fy + ")";
+        document.getElementById('barTitle').innerHTML = " Indicator: " + displayVal + " (" + fy + ")";
 
     switch (valCategory) {
+            case "Total no of Children Born": xValue = d => d.tot_chld_born; sortByL = 'tot_chld_born'; break;
 
-            case "Childhood Diseases-Pneumonia": xValue = d => d.per_chld_disease_pneumonia; sortByL = 'per_chld_disease_pneumonia'; break;
+            case "Child Immunisation-Vitamin K1(Birth Dose)": xValue = d => d.chld_immunzt_vit_k1; sortByL = 'chld_immunzt_vit_k1'; break;
 
-            case "Childhood Diseases-Sepsis": xValue = d => d.per_chld_disease_sepsis; sortByL = 'per_chld_disease_sepsis'; break;
+            case "Child Immunisation-BCG": xValue = d => d.chld_immunzt_bcg; sortByL = 'chld_immunzt_bcg'; break;
 
-            case "Childhood Diseases-Tuberculosis(TB)": xValue = d => d.per_chld_disease_tb; sortByL = 'per_chld_disease_tb'; break;
+            case "Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose": xValue = d => d.chld_immunzt_9to11m_mr; sortByL = 'chld_immunzt_9to11m_mr'; break;
 
-            case "Childhood Diseases-Malaria": xValue = d => d.per_chld_disease_malaria; sortByL = 'per_chld_disease_malaria'; break;
+            case "Child immunisation-Vitamin A Dose-1": xValue = d => d.chld_immunzt_vit_a_dose_1; sortByL = 'chld_immunzt_vit_a_dose_1'; break;
 
-            case "Childhood Diseases-Diarrhoea": xValue = d => d.per_chld_disease_diarrhoea; sortByL = 'per_chld_disease_diarrhoea'; break;
+            case "Children(12-59 months) provided Albendazole": xValue = d => d.no_chld_12to59m_albendazole; sortByL = 'no_chld_12to59m_albendazole'; break;
+            
+            case "Child immunisation DPT and Pentavalent 1st dose": xValue = d => d.chld_immunzt_dpt1_penta1; sortByL = 'chld_immunzt_dpt1_penta1'; break;
 
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValue = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByL = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
+            case "Child immunisation DPT and Pentavalent 2nd dose": xValue = d => d.chld_immunzt_dpt2_penta2; sortByL = 'chld_immunzt_dpt2_penta2'; break;
 
-            case "Children admitted with upper respiratory infections": xValue = d => d.per_chld_admtd_upper_resp_infec; sortByL = 'per_chld_admtd_upper_resp_infec'; break;
-
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValue = d => d.per_chld_disease_sam; sortByL = 'per_chld_disease_sam'; break;
+            case "Child immunisation DPT and Pentavalent 3rd dose": xValue = d => d.chld_immunzt_dpt3_penta3; sortByL = 'chld_immunzt_dpt3_penta3'; break;
     }
 
     var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
@@ -607,22 +596,23 @@
 
     switch (valCategory) {
 
-            case "Childhood Diseases-Pneumonia": xValueR = d => d.per_chld_disease_pneumonia; sortByR = 'per_chld_disease_pneumonia'; break;
+        case "Total no of Children Born": xValueR = d => d.tot_chld_born; sortByR = 'tot_chld_born'; break;
 
-            case "Childhood Diseases-Sepsis": xValueR = d => d.per_chld_disease_sepsis; sortByR = 'per_chld_disease_sepsis'; break;
+            case "Child Immunisation-Vitamin K1(Birth Dose)": xValueR = d => d.chld_immunzt_vit_k1; sortByR = 'chld_immunzt_vit_k1'; break;
 
-            case "Childhood Diseases-Tuberculosis(TB)": xValueR = d => d.per_chld_disease_tb; sortByR = 'per_chld_disease_tb'; break;
+            case "Child Immunisation-BCG": xValueR = d => d.chld_immunzt_bcg; sortByR = 'chld_immunzt_bcg'; break;
 
-            case "Childhood Diseases-Malaria": xValueR = d => d.per_chld_disease_malaria; sortByR = 'per_chld_disease_malaria'; break;
+            case "Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose": xValueR = d => d.chld_immunzt_9to11m_mr; sortByR = 'chld_immunzt_9to11m_mr'; break;
 
-            case "Childhood Diseases-Diarrhoea": xValueR = d => d.per_chld_disease_diarrhoea; sortByR = 'per_chld_disease_diarrhoea'; break;
+            case "Child immunisation-Vitamin A Dose-1": xValueR = d => d.chld_immunzt_vit_a_dose_1; sortByR = 'chld_immunzt_vit_a_dose_1'; break;
 
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValueR = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByR = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
+            case "Children(12-59 months) provided Albendazole": xValueR = d => d.no_chld_12to59m_albendazole; sortByR = 'no_chld_12to59m_albendazole'; break;
+            
+            case "Child immunisation DPT and Pentavalent 1st dose": xValueR = d => d.chld_immunzt_dpt1_penta1; sortByR = 'chld_immunzt_dpt1_penta1'; break;
 
-            case "Children admitted with upper respiratory infections": xValueR = d => d.per_chld_admtd_upper_resp_infec; sortByR = 'per_chld_admtd_upper_resp_infec'; break;
+            case "Child immunisation DPT and Pentavalent 2nd dose": xValueR = d => d.chld_immunzt_dpt2_penta2; sortByR = 'chld_immunzt_dpt2_penta2'; break;
 
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValueR = d => d.per_chld_disease_sam; sortByR = 'per_chld_disease_sam'; break;
-
+            case "Child immunisation DPT and Pentavalent 3rd dose": xValueR = d => d.chld_immunzt_dpt3_penta3; sortByR = 'chld_immunzt_dpt3_penta3'; break;
     }
 
     var valMonth = tickLabels[$('#monthSlider').slider('getValue')];

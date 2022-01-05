@@ -200,12 +200,12 @@
     }
   }
 
-  let sortByL = 'no_early_anc_register';
+  let sortByL = 'chld_disease_pneumonia';
 
-  let sortByR = 'no_early_anc_register';
+  let sortByR = 'chld_disease_pneumonia';
 
-  let xValue = d => d.no_early_anc_register;
-  let xValueR = d => d.no_early_anc_register;
+  let xValue = d => d.chld_disease_pneumonia;
+  let xValueR = d => d.chld_disease_pneumonia;
 
   let stateSelected = '{{ dist_name }}';
 
@@ -259,9 +259,9 @@
     let getColor;
 
     
-      getColor = d3.scaleSequential().domain([d3.min(data, xValue), d3.max(data, xValue)])
-
-        .interpolator(d3.interpolateRdYlGn);
+      getColor = d3.scaleSequential().domain([d3.max(data, xValue), d3.min(data, xValue)])
+      
+        .interpolator(d3.interpolateRdYlGn);;
     
 
     let chart = g1.selectAll("rect").data(data)
@@ -377,7 +377,8 @@
     let getColor;
 
     
-      getColor = d3.scaleSequential().domain([d3.min(data, xValueR), d3.max(data, xValueR)])
+      getColor = d3.scaleSequential().domain([d3.max(data, xValue), d3.min(data, xValue)])
+      
         .interpolator(d3.interpolateRdYlGn);
     
 
@@ -513,7 +514,7 @@
     });
 
   data.forEach(d => {
-    d.chld_disease_sepsis = +d.chld_disease_sepsis;
+        d.chld_disease_sepsis = +d.chld_disease_sepsis;
         d.chld_disease_pneumonia = +d.chld_disease_pneumonia;
         d.chld_disease_tb = +d.chld_disease_tb;
         d.chld_disease_malaria = +d.chld_disease_malaria;

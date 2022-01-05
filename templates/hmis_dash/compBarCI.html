@@ -77,16 +77,16 @@
       </button>
 
       <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Child Immunisation-Vitamin K1(Birth Dose)</a>
+        <a class="dropdown-item" href="#">Child Immunisation-BCG</a>
+        <a class="dropdown-item" href="#">Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose</a>
+        <a class="dropdown-item" href="#">Child immunisation-Vitamin A Dose-1</a>
+        <a class="dropdown-item" href="#">Children(12-59 months) provided Albendazole</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 1st dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 2nd dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 3rd dose</a>
 
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-      </div>
+    </div>
 
 
 
@@ -109,18 +109,17 @@
 
       </button>
 
-      <div class="dropdown-menu category2" aria-labelledby="dropdownMenuButton">
+      <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Child Immunisation-Vitamin K1(Birth Dose)</a>
+        <a class="dropdown-item" href="#">Child Immunisation-BCG</a>
+        <a class="dropdown-item" href="#">Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose</a>
+        <a class="dropdown-item" href="#">Child immunisation-Vitamin A Dose-1</a>
+        <a class="dropdown-item" href="#">Children(12-59 months) provided Albendazole</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 1st dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 2nd dose</a>
+        <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 3rd dose</a>
 
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-
-      </div>
+    </div>
     </div>
   </div>
 
@@ -203,12 +202,12 @@
     }
   }
 
-  let sortByL = 'per_chld_disease_pneumonia';
+  let sortByL = 'per_chld_immunzt_vit_k1';
 
-  let sortByR = 'per_chld_disease_pneumonia';
+  let sortByR = 'per_chld_immunzt_vit_k1';
 
-  let xValue = d => d.per_chld_disease_pneumonia;
-  let xValueR = d => d.per_chld_disease_pneumonia;
+  let xValue = d => d.per_chld_immunzt_vit_k1;
+  let xValueR = d => d.per_chld_immunzt_vit_k1;
 
   let stateSelected = '{{ dist_name }}';
 
@@ -261,9 +260,10 @@
 
     let getColor;
 
-      getColor = d3.scaleSequential().domain([d3.max(data, xValue), d3.min(data, xValue)])
-      
+      getColor = d3.scaleSequential().domain([d3.min(data, xValue), d3.max(data, xValue)])
+
         .interpolator(d3.interpolateRdYlGn);
+    
 
     let chart = g1.selectAll("rect").data(data)
 
@@ -376,9 +376,10 @@
 
     let getColor;
 
-      getColor = d3.scaleSequential().domain([d3.max(data, xValueR), d3.min(data, xValueR)])
+    
+      getColor = d3.scaleSequential().domain([d3.min(data, xValueR), d3.max(data, xValueR)])
         .interpolator(d3.interpolateRdYlGn);
-   
+    
 
     let chart = g2.selectAll("rect").data(data)
 
@@ -506,38 +507,36 @@
   data_from_django = {{ data | safe }};
 
   var data = []
-
-  data_from_django.forEach(element => {
-    if (element.per_chld_disease_pneumonia > 200)
-            element.per_chld_disease_pneumonia = 200;
-        if (element.per_chld_disease_sepsis > 200)
-            element.per_chld_disease_sepsis = 200;
-        if (element.per_chld_disease_tb > 200)
-            element.per_chld_disease_tb = 200;
-        if (element.per_chld_disease_malaria > 200)
-            element.per_chld_disease_malaria = 200;
-        if (element.per_chld_disease_diarrhoea > 200)
-            element.per_chld_disease_diarrhoea = 200;
-        if (element.per_chld_disease_diarrhoea_trtd_inpatnt > 200)
-            element.per_chld_disease_diarrhoea_trtd_inpatnt = 200;
-        if (element.per_chld_admtd_upper_resp_infec > 200)
-            element.per_chld_admtd_upper_resp_infec = 200;
-        if (element.per_chld_disease_sam > 200)
-            element.per_chld_disease_sam = 200;
-
+    data_from_django.forEach(element => {
+        if(element.per_chld_immunzt_vit_k1 > 200)
+            element.per_chld_immunzt_vit_k1 = 200;
+       if(element.per_chld_immunzt_bcg > 200)
+            element.per_chld_immunzt_bcg = 200;
+       if(element.per_chld_immunzt_9to11m_mr > 200)
+            element.per_chld_immunzt_9to11m_mr = 200;
+        if(element.per_chld_immunzt_vit_a_dose_1 > 200)
+            element.per_chld_immunzt_vit_a_dose_1 = 200;
+        if(element.per_no_chld_12to59m_albendazole > 200)
+            element.per_no_chld_12to59m_albendazole = 200;
+        if(element.per_chld_immunzt_dpt1_penta1 > 200)
+            element.per_chld_immunzt_dpt1_penta1 = 200;
+        if(element.per_chld_immunzt_dpt2_penta2 > 200)
+            element.per_chld_immunzt_dpt2_penta2 = 200;
+        if(element.per_chld_immunzt_dpt3_penta3 > 200)
+            element.per_chld_immunzt_dpt3_penta3 = 200;
         data.push(element);
     });
 
   data.forEach(d => {
-    d.per_chld_disease_pneumonia = +d.per_chld_disease_pneumonia;
-        d.per_chld_disease_sepsis = +d.per_chld_disease_sepsis;
-        d.per_chld_disease_tb = +d.per_chld_disease_tb;
-        d.per_chld_disease_malaria = +d.per_chld_disease_malaria;
-        d.per_chld_disease_diarrhoea = +d.per_chld_disease_diarrhoea;
-        d.per_chld_disease_diarrhoea_trtd_inpatnt = +d.per_chld_disease_diarrhoea_trtd_inpatnt;
-        d.per_chld_admtd_upper_resp_infec = +d.per_chld_admtd_upper_resp_infec;
-        d.per_chld_disease_sam = +d.per_chld_disease_sam;
-        d.area_id = d.area_id;
+        d.per_chld_immunzt_vit_k1 = +d.per_chld_immunzt_vit_k1;
+        d.per_chld_immunzt_bcg = +d.per_chld_immunzt_bcg;
+        d.per_chld_immunzt_9to11m_mr = +d.per_chld_immunzt_9to11m_mr;
+        d.per_chld_immunzt_vit_a_dose_1 = +d.per_chld_immunzt_vit_a_dose_1;
+        d.per_no_chld_12to59m_albendazole = +d.per_no_chld_12to59m_albendazole;
+        d.per_chld_immunzt_dpt1_penta1 = +d.per_chld_immunzt_dpt1_penta1;
+        d.per_chld_immunzt_dpt2_penta2 = +d.per_chld_immunzt_dpt2_penta2;
+        d.per_chld_immunzt_dpt3_penta3 = +d.per_chld_immunzt_dpt3_penta3;
+        d.area_id = +d.area_id;
         d.area_name = d.area_name;
         d.month = d.month;
         d.financial_year = d.financial_year;
@@ -574,21 +573,21 @@
 
     switch (valCategory) {
 
-            case "Childhood Diseases-Pneumonia": xValue = d => d.per_chld_disease_pneumonia; sortByL = 'per_chld_disease_pneumonia'; break;
+        case "Child Immunisation-Vitamin K1(Birth Dose)": xValue = d => d.per_chld_immunzt_vit_k1; sortByL = 'per_chld_immunzt_vit_k1'; break;
 
-            case "Childhood Diseases-Sepsis": xValue = d => d.per_chld_disease_sepsis; sortByL = 'per_chld_disease_sepsis'; break;
+        case "Child Immunisation-BCG": xValue = d => d.per_chld_immunzt_bcg; sortByL = 'per_chld_immunzt_bcg'; break;
 
-            case "Childhood Diseases-Tuberculosis(TB)": xValue = d => d.per_chld_disease_tb; sortByL = 'per_chld_disease_tb'; break;
+        case "Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose": xValue = d => d.per_chld_immunzt_9to11m_mr; sortByL = 'per_chld_immunzt_9to11m_mr'; break;
 
-            case "Childhood Diseases-Malaria": xValue = d => d.per_chld_disease_malaria; sortByL = 'per_chld_disease_malaria'; break;
+        case "Child immunisation-Vitamin A Dose-1": xValue = d => d.per_chld_immunzt_vit_a_dose_1; sortByL = 'per_chld_immunzt_vit_a_dose_1'; break;
 
-            case "Childhood Diseases-Diarrhoea": xValue = d => d.per_chld_disease_diarrhoea; sortByL = 'per_chld_disease_diarrhoea'; break;
+        case "Children(12-59 months) provided Albendazole": xValue = d => d.per_no_chld_12to59m_albendazole; sortByL = 'per_no_chld_12to59m_albendazole'; break;
 
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValue = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByL = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
+        case "Child immunisation DPT and Pentavalent 1st dose": xValue = d => d.per_chld_immunzt_dpt1_penta1; sortByL = 'per_chld_immunzt_dpt1_penta1'; break;
 
-            case "Children admitted with upper respiratory infections": xValue = d => d.per_chld_admtd_upper_resp_infec; sortByL = 'per_chld_admtd_upper_resp_infec'; break;
+        case "Child immunisation DPT and Pentavalent 2nd dose": xValue = d => d.per_chld_immunzt_dpt2_penta2; sortByL = 'per_chld_immunzt_dpt2_penta2'; break;
 
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValue = d => d.per_chld_disease_sam; sortByL = 'per_chld_disease_sam'; break;
+        case "Child immunisation DPT and Pentavalent 3rd dose": xValue = d => d.per_chld_immunzt_dpt3_penta3; sortByL = 'per_chld_immunzt_dpt3_penta3'; break;
     }
 
     var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
@@ -607,21 +606,21 @@
 
     switch (valCategory) {
 
-            case "Childhood Diseases-Pneumonia": xValueR = d => d.per_chld_disease_pneumonia; sortByR = 'per_chld_disease_pneumonia'; break;
+        case "Child Immunisation-Vitamin K1(Birth Dose)": xValueR = d => d.per_chld_immunzt_vit_k1; sortByR = 'per_chld_immunzt_vit_k1'; break;
 
-            case "Childhood Diseases-Sepsis": xValueR = d => d.per_chld_disease_sepsis; sortByR = 'per_chld_disease_sepsis'; break;
+        case "Child Immunisation-BCG": xValueR = d => d.per_chld_immunzt_bcg; sortByR = 'per_chld_immunzt_bcg'; break;
 
-            case "Childhood Diseases-Tuberculosis(TB)": xValueR = d => d.per_chld_disease_tb; sortByR = 'per_chld_disease_tb'; break;
+        case "Child Immunisation(9-11 months)-Measles & Rubella (MR) 1st Dose": xValueR = d => d.per_chld_immunzt_9to11m_mr; sortByR = 'per_chld_immunzt_9to11m_mr'; break;
 
-            case "Childhood Diseases-Malaria": xValueR = d => d.per_chld_disease_malaria; sortByR = 'per_chld_disease_malaria'; break;
+        case "Child immunisation-Vitamin A Dose-1": xValueR = d => d.per_chld_immunzt_vit_a_dose_1; sortByR = 'per_chld_immunzt_vit_a_dose_1'; break;
 
-            case "Childhood Diseases-Diarrhoea": xValueR = d => d.per_chld_disease_diarrhoea; sortByR = 'per_chld_disease_diarrhoea'; break;
+        case "Children(12-59 months) provided Albendazole": xValueR = d => d.per_no_chld_12to59m_albendazole; sortByR = 'per_no_chld_12to59m_albendazole'; break;
 
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValueR = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByR = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
+        case "Child immunisation DPT and Pentavalent 1st dose": xValueR = d => d.per_chld_immunzt_dpt1_penta1; sortByR = 'per_chld_immunzt_dpt1_penta1'; break;
 
-            case "Children admitted with upper respiratory infections": xValueR = d => d.per_chld_admtd_upper_resp_infec; sortByR = 'per_chld_admtd_upper_resp_infec'; break;
+        case "Child immunisation DPT and Pentavalent 2nd dose": xValueR = d => d.per_chld_immunzt_dpt2_penta2; sortByR = 'per_chld_immunzt_dpt2_penta2'; break;
 
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValueR = d => d.per_chld_disease_sam; sortByR = 'per_chld_disease_sam'; break;
+        case "Child immunisation DPT and Pentavalent 3rd dose": xValueR = d => d.per_chld_immunzt_dpt3_penta3; sortByR = 'per_chld_immunzt_dpt3_penta3'; break;
 
     }
 
