@@ -1294,22 +1294,24 @@
                                                 target="_blank">Compare</a>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        LINE
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item lc_link"
-                                            href="{% url 'linenumeric' dist_name fy %}?id1=Total_number_of_Still_Birth"
-                                            target="_blank">Areawise</a>
-                                        <a class="dropdown-item lc_link"
-                                            href="{% url 'fy_lineNum' dist_name fy %}?id1=Total_number_of_Still_Birth"
-                                            target="_blank">Yearwise</a>
+                                    <div class="btn-group dropright mr-1">
+                                        <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            LINE
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'linenumeric' dist_name fy %}?id1=Total_number_of_Still_Birth"
+                                                target="_blank">Areawise</a>
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'fy_lineNum' dist_name fy %}?id1=Total_number_of_Still_Birth"
+                                                target="_blank">Yearwise</a>
+                                        </div>
                                     </div>
                 </div>
                 <a href="{% url 'tablechart' dist_name fy %}" class="lc_link" target="_blank"
                     style="color: #a10404;">TABLE</a>
-                <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_no_of_Still_Birth" class="lc_link" target="_blank"
+                <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_number_of_Still_Birth" class="lc_link" target="_blank"
                     style="color: #0414a1;">PIE</a>
                 </td>
                 </tr>
