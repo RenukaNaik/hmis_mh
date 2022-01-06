@@ -188,7 +188,7 @@
       if (opt == 'Child Immunisation-Vitamin K1(Birth Dose)') {
         arcInitial = d => d.per_chld_immunzt_vit_k1;
         arcInitialNum = d => d.chld_immunzt_vit_k1;
-      } else if (opt == 'Child Immunisation-BCG') {
+      } else if (opt == 'Total no of Children Born') {
         arcInitial = d => d.per_chld_born;
         arcInitialNum = d => d.tot_chld_born;
       } else if (opt == 'Child Immunisation-BCG') {
@@ -226,7 +226,6 @@
       .value(function (d) {
         return arcInitial(d);
       });
-
     var path = d3.arc()
       .outerRadius(radius - 10)
       .innerRadius(0);
@@ -516,7 +515,6 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
 
   monthSelect = tickLabels[$('#monthSlider').slider('getValue')]
   augData = filterCSV(data, 'month', monthSelect);
-  console.log(augData, "augData")
   render(augData);
 </script>
 

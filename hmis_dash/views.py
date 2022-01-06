@@ -469,7 +469,6 @@ class pieChildImmu(LoginRequiredMixin, TemplateView):
         district = request.GET.get('dist_name', dist_name) 
         dtint = int(district) 
         fy_name = request.GET.get('fy', fy) 
-        fy_name = request.GET.get('fy', fy) 
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id

@@ -540,6 +540,45 @@
                                         target="_blank" style="color: #0414a1;">PIE</a>
                                 </td>
                             </tr>
+                            <tr class="per_value">
+                                <td>1.2.3</td>
+                                <td colspan="6">% PW given TT Booster as fraction of children born (or live births)
+                                    : <span id="st_pwttbooster"></span></td>
+                                <td colspan="2">
+                                    <div class="btn-group dropright mr-1">
+                                        <button type="button" class="btn btn-light dropdown-toggle barColor"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            BAR
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'barchart' dist_name fy %}?id1=PW_given_TT_Booster_as_fraction_of_children_born_(or_live_births)"
+                                                target="_blank">Individual</a>
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'pw_compbar' dist_name fy %}?id1=PW_given_TT_Booster_as_fraction_of_children_born_(or_live_births)"
+                                                target="_blank">Compare</a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group dropright mr-1">
+                                        <button type="button" class="btn btn-light dropdown-toggle lineColor"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            LINE
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'linechart' dist_name fy %}?id1=PW_given_TT_Booster_as_fraction_of_children_born_(or_live_births)"
+                                                target="_blank">Areawise</a>
+                                            <a class="dropdown-item lc_link"
+                                                href="{% url 'fy_line' dist_name fy %}?id1=PW_given_TT_Booster_as_fraction_of_children_born_(or_live_births)"
+                                                target="_blank">Yearwise</a>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'tablechart' dist_name fy %}" class="lc_link" target="_blank"
+                                        style="color: #a10404;">TABLE</a>
+                                    <a href="{% url 'pw_map' fy %}?id1=5" class="lc_link" target="_blank"
+                                        style="color: #05705e;">MAP</a>
+                                </td>
+                            </tr>
 
                             <tr class="per_value">
                                 <td>1.2.3</td>
@@ -1248,10 +1287,10 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item lc_link"
-                                                href="{% url 'barnumeric' dist_name fy %}?id1=Total_no_of_Still_Birth"
+                                                href="{% url 'barnumeric' dist_name fy %}?id1=Total_number_of_Still_Birth"
                                                 target="_blank">Individual</a>
                                             <a class="dropdown-item lc_link"
-                                                href="{% url 'pw_compbarNumeric' dist_name fy %}?id1=Total_no_of_Still_Birth"
+                                                href="{% url 'pw_compbarNumeric' dist_name fy %}?id1=Total_number_of_Still_Birth"
                                                 target="_blank">Compare</a>
                                         </div>
                                     </div>
@@ -1261,10 +1300,10 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item lc_link"
-                                            href="{% url 'linenumeric' dist_name fy %}?id1=Total_no_of_Still_Birth"
+                                            href="{% url 'linenumeric' dist_name fy %}?id1=Total_number_of_Still_Birth"
                                             target="_blank">Areawise</a>
                                         <a class="dropdown-item lc_link"
-                                            href="{% url 'fy_lineNum' dist_name fy %}?id1=Total_no_of_Still_Birth"
+                                            href="{% url 'fy_lineNum' dist_name fy %}?id1=Total_number_of_Still_Birth"
                                             target="_blank">Yearwise</a>
                                     </div>
                 </div>
@@ -2943,6 +2982,8 @@
 
         document.getElementById('st_totstb').innerHTML = pw_data[0].tot_still_birth;
         document.getElementById('st_stbirth').innerHTML = pw_data[0].per_still_birth + "%";
+
+        document.getElementById('st_pwttbooster').innerHTML = pw_data[0].pw_tt_booster_given + "%";
 
         //Child Immunisation Related
         document.getElementById('st_totchldborn').innerHTML = ci_data[0].tot_chld_born;

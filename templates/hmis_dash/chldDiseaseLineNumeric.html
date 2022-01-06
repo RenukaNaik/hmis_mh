@@ -298,10 +298,11 @@
       .key(function (d) { return d.areaN })
       .entries(data);
 
-    var result = dataNest.filter(function (val, idx, arr) {
-      return $("." + val.key).attr("fill") != "#ccc"
+    var result = dataNest
+    //.filter(function (val, idx, arr) {
+      //return $("." + val.key).attr("fill") != "#ccc"
       // matching the data with selector status
-    })
+    //})
 
 
     var block = g.selectAll(".line")
@@ -432,7 +433,8 @@
 
     function removeTooltip() {
       if (tooltip) tooltip.style('display', 'none');
-      // if(mouseG)     mouseG.selectAll('.mouse-per-line').selectAll('.topic-circle').remove();
+      if(mouseG)     d3.selectAll('.mouse-line').style("opacity", "0");
+            if(mouseG)     d3.selectAll(".mouse-per-line circle").style("opacity", "0");
     }
 
     function drawTooltip() {
@@ -467,7 +469,7 @@
 
       tooltip.html('<b style="color:#FF0000">' + monthX + '</b>')
         .style('display', 'block')
-        .style('left', d3.event.pageX + "px")
+        .style('left', d3.event.pageX - 200 + "px")
         .style('top', 40 + "px")
         .selectAll()
         .data(result).enter()
