@@ -105,11 +105,11 @@
     <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
       <a class="dropdown-item" href="#">Early ANC Registeration</a>
       <a class="dropdown-item" href="#">PW received 4 or more ANC check ups</a>
-      <a class="dropdown-item" href="#">PW given TT1</a>
+      <a class="dropdown-item" href="#">PW given TT1</a>
       <a class="dropdown-item" href="#">PW given TT1 or TT Booster</a>
       <a class="dropdown-item" href="#">PW given TT Booster as fraction of children born (or live births)</a>
       <a class="dropdown-item" href="#">TT1 to TT2 Dropout</a>
-      <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
+      <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
       <a class="dropdown-item" href="#">PW given 180 Iron Folic Acid (IFA) tablets</a>
       <a class="dropdown-item" href="#">PW given one Albendazole tablet after 1st trimester</a>
       <a class="dropdown-item" href="#">Severely Anaemic PW given treatment</a>
@@ -548,6 +548,7 @@
   $(".category a").click(function () {
     var val = $(this).text();
     selectedCategory = val;
+    console.log(val, "val");
     setSection(val);
     st_data = filterCSV(data, 'area_id', areaName);
     d3.selectAll(".mouse-per-line circle").remove();
@@ -562,6 +563,7 @@
     $('.category a').parents('.dropdown').find('.dropdown-toggle').html(selectedCat + ' <span class="selectedCategory"></span>');
     st_data = filterCSV(data, 'area_id', areaName);
     setSection(selectedCat);
+    console.log(selectedCat, "sel");
     setData(st_data, section);
   }
   else {
@@ -590,14 +592,15 @@
       section = 'pw_albendazole';
     else if (val == 'Severely Anaemic PW given treatment')
       section = 'per_severe_anaemia_tested_treated';
-    else if (val == 'Still_Birth_Rate_(Still_births_per_1000_Live_Births)')
+    else if (val == 'Still Birth Rate (Still births per 1000 Live Births)')
       section = 'per_still_birth';
-    else if (val = 'C-section deliveries')
-      section = 'c_section_deliveries';
     else if (val == 'Preterm Birth Rate')
       section = 'preterm_birth_rate';
+    else if (val == 'Pregnancy outcomes as a % of ANC registration')
+      section = 'per_pw_outcome';
     else
-      section = 'per_pw_outcome';  
+      section = 'c_section_deliveries';
+     
   }
 
   // $(".state a").click(function () {

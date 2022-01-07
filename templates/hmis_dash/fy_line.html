@@ -100,11 +100,11 @@
         <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Early ANC Registeration</a>
             <a class="dropdown-item" href="#">PW received 4 or more ANC check ups</a>
-            <a class="dropdown-item" href="#">PW given TT1</a>
+            <a class="dropdown-item" href="#">PW given TT1</a>
             <a class="dropdown-item" href="#">PW given TT1 or TT Booster</a>
             <a class="dropdown-item" href="#">PW given TT Booster as fraction of children born (or live births)</a>
             <a class="dropdown-item" href="#">TT1 to TT2 Dropout</a>
-            <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
+            <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
             <a class="dropdown-item" href="#">PW given 180 Iron Folic Acid (IFA) tablets</a>
             <a class="dropdown-item" href="#">PW given one Albendazole tablet after 1st trimester</a>
             <a class="dropdown-item" href="#">Severely Anaemic PW given treatment</a>
@@ -580,20 +580,18 @@
             section = 'early_anc_register';
         else if (val == 'PW received 4 or more ANC check ups')
             section = 'anc_4_or_more';
-        else if (val == 'PW given TT1')
+        else if (val == 'PW given TT1')
             section = 'pw_tt1_given';
         else if (val == 'TT1 to TT2 Dropout')
             section = 'pw_tt2_given';
         else if (val == 'PW given TT Booster as fraction of children born (or live births)')
             section = 'pw_tt_booster_given';
-        else if (val == 'PW given 360 Calcium tablets')
+        else if (val == 'PW given 360 Calcium tablets')
             section = 'pw_calcium';
         else if (val == 'PW given 180 Iron Folic Acid (IFA) tablets')
             section = 'pw_ifa';
         else if (val == 'PW given one Albendazole tablet after 1st trimester')
             section = 'pw_albendazole';
-        else if (val = 'C-section deliveries')
-            section = 'c_section_deliveries';
         else if (val == 'PW given TT1 or TT Booster')
             section = 'per_pw_given_tt1_or_tt_booster';
         else if (val == 'Severely Anaemic PW given treatment')
@@ -602,8 +600,10 @@
             section = 'preterm_birth_rate';
         else if (val == 'Pregnancy outcomes as a % of ANC registration')
             section = 'per_pw_outcome';
-        else 
-            section = 'per_still_birth'  
+        else if (val == 'Still Birth Rate (Still births per 1000 Live Births)')
+            section = 'per_still_birth';
+        else
+            section = 'c_section_deliveries'; 
     }
 
     $("#state").change(function () {

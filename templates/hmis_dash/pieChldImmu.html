@@ -509,12 +509,14 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
     // document.getElementById('bartitleMonth').innerHTML = val;
     mydata = filterCSV(data, 'month', val);
     svg.selectAll("*").remove();
+    console.log(mydata, "mydata");
     render(mydata);
 });
 
 
   monthSelect = tickLabels[$('#monthSlider').slider('getValue')]
   augData = filterCSV(data, 'month', monthSelect);
+  console.log(augData, "augData");
   render(augData);
 </script>
 
