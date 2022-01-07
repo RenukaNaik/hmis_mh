@@ -304,7 +304,6 @@
 
         let stateSelected = '{{ dist_name}}';
         stateSelected = stateSelected.replace(/_/g, ' ');
-        console.log("stateSelected", stateSelected);
 
         g.selectAll('rect')
             .filter(function(d) { return d.area_id == stateSelected; })
@@ -432,11 +431,8 @@
 
     let choices = parseURLParameters(window.location.href);
 
-    console.log(choices, "choices")
     if (choices.length > 0) {
         let categoryChoices = choices[0].replace(/_/g, ' ');
-        console.log(categoryChoices, "[0]")
-
         $('.category a').parents('.dropdown').find('.dropdown-toggle').html(categoryChoices + ' <span class="selectedCategory"></span>');
         displayChart(categoryChoices);
     }
