@@ -593,13 +593,11 @@
     var dataFilter = data.map(function (d) { return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
 
     //debugger
-    //   console.log(data,"data in setData")
-
 
     dataFilter.forEach(function (d) {
       d.value = +d.value;
     });
-    // console.log(dataFilter,"dataFilter")
+
     //debugger
     render(dataFilter);
     jQuery('h1.page-header').html(section);

@@ -183,7 +183,6 @@
     let tansitionDuration = 1000;
 
     const render = data => {
-        console.log(data, "data in render")
         const xScale = d3.scaleBand().range([0, 1.5 * bar_width * data.length]).padding(0.3);
         const yScale = d3.scaleLinear().domain([1.5 * (d3.max(data, yValue)), 0]).range([0, innerHeight]);
 
@@ -352,7 +351,6 @@
         var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
 
         filterdata = filterCSV(data, 'month', valMonth);
-        console.log(filterdata, "filter")
         mydata = sortData(filterdata, sortBy);
         svg.selectAll("*").remove();
         render(mydata);
@@ -376,7 +374,6 @@
     data_from_django = {{ data | safe }};
     var data = []
     data_from_django.forEach(element => {
-        console.log(element)
         if (element.early_anc_register > 200)
             element.early_anc_register = 200;
         if (element.anc_4_or_more > 200)
@@ -408,7 +405,6 @@
 
         data.push(element);
     });
-    // console.log(data_from_django, "data_from_django")
 
     data.forEach(d => {
         d.early_anc_register = +d.early_anc_register;
@@ -445,7 +441,6 @@
 
     if (choices.length > 0) {
         let categoryChoices = choices[0].replace(/_/g, ' ');
-        console.log(categoryChoices, "[0]")
 
         $('.category a').parents('.dropdown').find('.dropdown-toggle').html(categoryChoices + ' <span class="selectedCategory"></span>');
         displayChart(categoryChoices);

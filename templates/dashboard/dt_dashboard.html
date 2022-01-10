@@ -133,7 +133,7 @@
                 </select>
             </div>
         </div>
-        <div class="phcList">
+        <!-- <div class="phcList">
             <div class="form-group">
 
                 <label class="d-inline-block ml-5" for="area_select">Select PHC:</label>
@@ -145,7 +145,7 @@
                     {% endfor %}
                 </select>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </form>
@@ -2803,6 +2803,7 @@
     }
 
     let areaDetails = {{ areaData | safe }};
+    let fy = '{{ fy }}';
 
     $("#areaDt").change(function (e) {
         e.preventDefault();
@@ -2891,7 +2892,6 @@
                 month: monthSelected
             },
             success: function (response) {
-                console.log(response, "response")
                 let pw_dataAjax = JSON.parse(response.context.pw_data);
                 let ci_dataAjax = JSON.parse(response.context.ci_data);
                 let cd_dataAjax = JSON.parse(response.context.cd_data);
@@ -3064,27 +3064,33 @@
     }
 
 
-    $(document).ready(function () {
-        $('#month-1').bind('change', function () {
-            var value = $(this).val();
-            var elements = $('.phcList').children().show(); // show the ones we want
-            if (value != 'All') { // if somethings' selected
-                elements.hide();  // hide all the elements
-            }
-            
-        }).trigger('change');
+    // $(document).ready(function () {
+    //     // for FY 2017-2018 PHC dropdown is not visible
+    //     if (fy == '2017-2018' ) { // if somethings' selected
+    //         $(".phcList")[0].style.visibility = "hidden";  // hide all the elements
+    //     }
 
-        // Only Ahmednagar PHCs visible for time-being
-        $('#areaDt').bind('change', function () {
-            var value = $(this).val();
-            var elements = $('.phcList').children().show(); // show the ones we want
-            if (value == '421' || value == '422') { // if somethings' selected
-                elements.hide();  // hide all the elements
-            }
+    //     $('#month-1').bind('change', function () {
+    //         let value = $(this).val();
             
-        }).trigger('change');
+    //         let elements = $('.phcList').children().show(); // show the ones we want
+    //         if (value != 'All') { // if somethings' selected
+    //             elements.hide();  // hide all the elements
+    //         }
+            
+    //     }).trigger('change');
 
-    });
+    //     // Mumbai and Mumbai Suburban PHCs are not visible for time-being
+    //     $('#areaDt').bind('change', function () {
+    //         let value = $(this).val();
+    //         var elements = $('.phcList').children().show(); // show the ones we want
+    //         if (value == '421' || value == '422') { // if somethings' selected
+    //             elements.hide();  // hide all the elements
+    //         }
+            
+    //     }).trigger('change');
+
+    // });
 
 </script>
 
