@@ -58,11 +58,11 @@
         <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Early ANC Registeration</a>
             <a class="dropdown-item" href="#">PW received 4 or more ANC check ups</a>
-            <a class="dropdown-item" href="#">PW given TT1</a>
+            <a class="dropdown-item" href="#">PW given TT1</a>
             <a class="dropdown-item" href="#">PW given TT1 or TT Booster</a>
             <a class="dropdown-item" href="#">PW given TT Booster as fraction of children born (or live births)</a>
             <a class="dropdown-item" href="#">TT1 to TT2 Dropout</a>
-            <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
+            <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
             <a class="dropdown-item" href="#">PW given 180 Iron Folic Acid (IFA) tablets</a>
             <a class="dropdown-item" href="#">PW given one Albendazole tablet after 1st trimester</a>
             <a class="dropdown-item" href="#">Severely Anaemic PW given treatment</a>
@@ -75,7 +75,7 @@
     </div>
 
     <button type="button" class="btn btn-light m-1"
-        onclick="location.href=`{% url 'barnumeric' dist_name fy %}`">Count</button>
+        onclick="location.href=`{% url 'barnumeric' dist_name fy %}`">Go to Count</button>
     <!-- <div class="dropdown m-1">
     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
@@ -322,7 +322,7 @@
 
             case "PW received 4 or more ANC check ups": yValue = d => d.anc_4_or_more; sortBy = 'anc_4_or_more'; break;
 
-            case "PW given TT1": yValue = d => d.pw_tt1_given; sortBy = 'pw_tt1_given'; break;
+            case "PW given TT1": yValue = d => d.pw_tt1_given; sortBy = 'pw_tt1_given'; break;
             
             case "PW given TT1 or TT Booster": yValue = d => d.per_pw_given_tt1_or_tt_booster; sortBy = 'per_pw_given_tt1_or_tt_booster'; break;
 
@@ -330,7 +330,7 @@
 
             case "TT1 to TT2 Dropout": yValue = d => d.pw_tt2_given; sortBy = 'pw_tt2_given'; break;
 
-            case "PW given 360 Calcium tablets": yValue = d => d.pw_calcium; sortBy = 'pw_calcium'; break;
+            case "PW given 360 Calcium tablets": yValue = d => d.pw_calcium; sortBy = 'pw_calcium'; break;
 
             case "PW given 180 Iron Folic Acid (IFA) tablets": yValue = d => d.pw_ifa; sortBy = 'pw_ifa'; break;
 
