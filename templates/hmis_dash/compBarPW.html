@@ -80,11 +80,11 @@
 
         <a class="dropdown-item" href="#">Early ANC Registeration</a>
         <a class="dropdown-item" href="#">PW received 4 or more ANC check ups</a>
-        <a class="dropdown-item" href="#">PW given TT1</a>
+        <a class="dropdown-item" href="#">PW given TT1</a>
         <a class="dropdown-item" href="#">PW given TT1 or TT Booster</a>
         <a class="dropdown-item" href="#">PW given TT Booster as fraction of children born (or live births)</a>
         <a class="dropdown-item" href="#">TT1 to TT2 Dropout</a>
-        <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
+        <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
         <a class="dropdown-item" href="#">PW given 180 Iron Folic Acid (IFA) tablets</a>
         <a class="dropdown-item" href="#">PW given one Albendazole tablet after 1st trimester</a>
         <a class="dropdown-item" href="#">Severely Anaemic PW given treatment</a>
@@ -373,7 +373,6 @@
             .attr("stroke-dasharray", '20,10,5,5,5,10')
             .attr("stroke", "red");
 
-    // g1.selectAll(".highlighted_bar").remove();
       
     // g1.selectAll('rect')
     //     .attr("class", "highlighted_bar")
@@ -620,7 +619,7 @@
 
 case "PW received 4 or more ANC check ups": xValue = d => d.anc_4_or_more; sortByL = 'anc_4_or_more'; break;
 
-case "PW given TT1": xValue = d => d.pw_tt1_given; sortByL = 'pw_tt1_given'; break;
+case "PW given TT1": xValue = d => d.pw_tt1_given; sortByL = 'pw_tt1_given'; break;
 
 case "PW given TT1 or TT Booster": xValue = d => d.per_pw_given_tt1_or_tt_booster; sortByL = 'per_pw_given_tt1_or_tt_booster'; break;
 
@@ -628,7 +627,7 @@ case "PW given TT Booster as fraction of children born (or live births)": xValue
 
 case "TT1 to TT2 Dropout": xValue = d => d.pw_tt2_given; sortByL = 'pw_tt2_given'; break;
 
-case "PW given 360 Calcium tablets": xValue = d => d.pw_calcium; sortByL = 'pw_calcium'; break;
+case "PW given 360 Calcium tablets": xValue = d => d.pw_calcium; sortByL = 'pw_calcium'; break;
 
 case "PW given 180 Iron Folic Acid (IFA) tablets": xValue = d => d.pw_ifa; sortByL = 'pw_ifa'; break;
 
@@ -665,7 +664,7 @@ case "Pregnancy outcomes as a % of ANC registration": xValue = d => d.per_pw_out
 
       case "PW received 4 or more ANC check ups": xValueR = d => d.anc_4_or_more; sortByR = 'anc_4_or_more'; break;
 
-      case "PW given TT1": xValueR = d => d.pw_tt1_given; sortByR = 'pw_tt1_given'; break;
+      case "PW given TT1": xValueR = d => d.pw_tt1_given; sortByR = 'pw_tt1_given'; break;
 
       case "PW given TT1 or TT Booster": xValueR = d => d.per_pw_given_tt1_or_tt_booster; sortByR = 'per_pw_given_tt1_or_tt_booster'; break;
 
@@ -673,7 +672,7 @@ case "Pregnancy outcomes as a % of ANC registration": xValue = d => d.per_pw_out
 
       case "TT1 to TT2 Dropout": xValueR = d => d.pw_tt2_given; sortByR = 'pw_tt2_given'; break;
 
-      case "PW given 360 Calcium tablets": xValueR = d => d.pw_calcium; sortByR = 'pw_calcium'; break;
+      case "PW given 360 Calcium tablets": xValueR = d => d.pw_calcium; sortByR = 'pw_calcium'; break;
 
       case "PW given 180 Iron Folic Acid (IFA) tablets": xValueR = d => d.pw_ifa; sortByR = 'pw_ifa'; break;
 

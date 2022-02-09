@@ -447,52 +447,12 @@
     function parseURLParameters() {
         var query = (window.location.search || '?').substr(1);
         var map = [];
-        query.replace(/([^&=]+)=?([^&]*)(?:&+|$)/g, function (match, key, value) {
+        query.replace(/([^&=]+)=?([^]*)(?:&+|$)/g, function (match, key, value) {
             map.push(value);
         });
         return map;
     }
 
-    function tables(data) {
-        $(".hello").remove();
-        var tbdata = [];
-        data.forEach(d => {
-            var tbd = {}
-            tbd["area_name"] = d.area_name;
-            tbd["Number of Children 0-6 years old enrolled for services"] = d.no_enrolled;
-            tbd["Total No. of Children Eligible to be Weighed"] = d.tot_elgb_wghd;
-            tbd["Total No. of Children Eligible for measuring Height"] = d.tot_elgb_hght;
-            tbd["Total No. of Children Weighed"] = d.no_wt;
-            tbd["Total No. of Children whose Height has been measured"] = d.no_ht;
-            tbd["Total No. of Children whose Height and Weight has been measured"] = d.no_wt_ht;
-            tbdata.push(tbd);
-        });
-
-        var table = d3.select('div#table').append('table').attr('class', 'hello');
-        var titles = d3.keys(tbdata[0]);
-        var headers = table.append('thead').append('tr')
-            .selectAll('th')
-            .data(titles).enter()
-            .append('th')
-            .text(function (d) {
-                return d;
-            });
-
-        var rows = table.append('tbody').selectAll('tr')
-            .data(tbdata).enter()
-            .append('tr');
-
-        rows.selectAll('td')
-            .data(function (d) {
-                return titles.map(function (k) {
-                    return { 'value': d[k], 'name': k };
-                });
-            }).enter()
-            .append('td')
-            .text(function (d) {
-                return d.value;
-            });
-    }
 
 </script>
 

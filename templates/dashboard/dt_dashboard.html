@@ -1074,8 +1074,8 @@
                                     </div>
                                     <a href="{% url 'tablechart' dist_name fy %}" class="lc_link" target="_blank"
                                         style="color: #a10404;">TABLE</a>
-                                    <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_number_of_Home_Deliveries" class="lc_link"
-                                        target="_blank" style="color: #0414a1;">PIE</a>
+                                    <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_number_of_Home_Deliveries"
+                                        class="lc_link" target="_blank" style="color: #0414a1;">PIE</a>
                                 </td>
                             </tr>
                             <tr>
@@ -1232,14 +1232,15 @@
                                     </div>
                                     <a href="{% url 'tablechart' dist_name fy %}" class="lc_link" target="_blank"
                                         style="color: #a10404;">TABLE</a>
-                                    <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Number_of_Preterm_Birth" class="lc_link"
-                                        target="_blank" style="color: #0414a1;">PIE</a>
+                                    <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Number_of_Preterm_Birth"
+                                        class="lc_link" target="_blank" style="color: #0414a1;">PIE</a>
                                 </td>
                             </tr>
                             <tr class="per_value">
                                 <td>4.1.2</td>
                                 <td colspan="6"> Preterm Birth Rate:
-                                    <span id="dt_pretermbirthrate"></span>
+                                    <span id="dt_pretermbirthrate"></span><br>
+                                    <span id="sb_caption"> (Number of Preterm Births per 1000 Live Births)</span></td>
                                 </td>
                                 <td colspan="2">
                                     <div class="btn-group dropright mr-1">
@@ -1311,14 +1312,14 @@
                 </div>
                 <a href="{% url 'tablechart' dist_name fy %}" class="lc_link" target="_blank"
                     style="color: #a10404;">TABLE</a>
-                <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_number_of_Still_Birth" class="lc_link" target="_blank"
-                    style="color: #0414a1;">PIE</a>
+                <a href="{% url 'stlvl_pie' dist_name fy %}?id1=Total_number_of_Still_Birth" class="lc_link"
+                    target="_blank" style="color: #0414a1;">PIE</a>
                 </td>
                 </tr>
                 <tr class="per_value">
                     <td>4.1.3</td>
-                    <td colspan="6"> Percent of Still Birth: <span id="st_stbirth"></span><br><span id="sb_caption"> (%
-                            of Still Births per 1000 Live Births)</span></td>
+                    <td colspan="6"> Still Birth Rate: <span id="st_stbirth"></span><br>
+                        <span id="sb_caption"> (Number of Still Births per 1000 Live Births)</span></td>
                     <td colspan="2">
                         <div class="btn-group dropright mr-1">
                             <button type="button" class="btn btn-light dropdown-toggle barColor" data-toggle="dropdown"
@@ -1326,9 +1327,11 @@
                                 BAR
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item lc_link" href="{% url 'barchart' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
+                                <a class="dropdown-item lc_link"
+                                    href="{% url 'barchart' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
                                     target="_blank">Individual</a>
-                                <a class="dropdown-item lc_link" href="{% url 'pw_compbar' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
+                                <a class="dropdown-item lc_link"
+                                    href="{% url 'pw_compbar' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
                                     target="_blank">Compare</a>
                             </div>
                         </div>
@@ -1341,7 +1344,8 @@
                                 <a class="dropdown-item lc_link"
                                     href="{% url 'linechart' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
                                     target="_blank">Areawise</a>
-                                <a class="dropdown-item lc_link" href="{% url 'fy_line' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
+                                <a class="dropdown-item lc_link"
+                                    href="{% url 'fy_line' dist_name fy %}?id1=Still_Birth_Rate_(Still_births_per_1000_Live_Births)"
                                     target="_blank">Yearwise</a>
                             </div>
                         </div>
@@ -1363,7 +1367,8 @@
                                 BAR
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item lc_link" href="{% url 'barchart' dist_name fy %}?id1=Pregnancy_outcomes_as_a_%_of_ANC_registration"
+                                <a class="dropdown-item lc_link"
+                                    href="{% url 'barchart' dist_name fy %}?id1=Pregnancy_outcomes_as_a_%_of_ANC_registration"
                                     target="_blank">Individual</a>
                                 <a class="dropdown-item lc_link"
                                     href="{% url 'pw_compbar' dist_name fy %}?id1=Pregnancy_outcomes_as_a_%_of_ANC_registration"
@@ -1429,7 +1434,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-    
+
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1471,7 +1476,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1555,7 +1560,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1639,7 +1644,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                            
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1721,7 +1726,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1804,7 +1809,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                        
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1887,7 +1892,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -1970,7 +1975,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle numeric lineColor"
@@ -2012,7 +2017,7 @@
                                             target="_blank">Compare</a>
                                     </div>
                                 </div>
-                                    
+
 
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle lineColor"
@@ -2179,8 +2184,7 @@
 
                         <tr class="per_value">
                             <td>10.1</td>
-                            <td colspan="6"> % of Pneumonia cases against Live Births: <span
-                                    id="st_cdpneu"></span></td>
+                            <td colspan="6"> % of Pneumonia cases against Live Births: <span id="st_cdpneu"></span></td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2261,8 +2265,7 @@
 
                         <tr class="per_value">
                             <td>10.3</td>
-                            <td colspan="6"> % of Sepsis cases against Live Births: <span
-                                    id="st_cdsepsis"></span></td>
+                            <td colspan="6"> % of Sepsis cases against Live Births: <span id="st_cdsepsis"></span></td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2341,8 +2344,8 @@
 
                         <tr class="per_value">
                             <td>10.7</td>
-                            <td colspan="6"> % of Tuberculosis(TB) cases against Live Births: <span
-                                    id="st_cdtb"></span></td>
+                            <td colspan="6"> % of Tuberculosis(TB) cases against Live Births: <span id="st_cdtb"></span>
+                            </td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2421,8 +2424,8 @@
 
                         <tr class="per_value">
                             <td>10.1.m</td>
-                            <td colspan="6"> % of Malaria cases against Live Births: <span
-                                    id="st_cdmalaria"></span></td>
+                            <td colspan="6"> % of Malaria cases against Live Births: <span id="st_cdmalaria"></span>
+                            </td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2501,8 +2504,8 @@
 
                         <tr class="per_value">
                             <td>10.11</td>
-                            <td colspan="6"> % of Diarrhoea cases against Live Births: <span
-                                    id="st_cddiarh"></span></td>
+                            <td colspan="6"> % of Diarrhoea cases against Live Births: <span id="st_cddiarh"></span>
+                            </td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2746,7 +2749,8 @@
 
                         <tr class="per_value">
                             <td>10.14</td>
-                            <td colspan="6"> % of Severe Acute Malnutrition(SAM) cases against Live Births: <span id="st_cdsam"></span></td>
+                            <td colspan="6"> % of Severe Acute Malnutrition(SAM) cases against Live Births: <span
+                                    id="st_cdsam"></span></td>
                             <td colspan="2">
                                 <div class="btn-group dropright mr-1">
                                     <button type="button" class="btn btn-light dropdown-toggle barColor"
@@ -2795,7 +2799,7 @@
     function filterCSV(csv, key, value) {
         var result = [];
         csv.forEach(function (val, idx, arr) {
-            if (val[key] == value)  {
+            if (val[key] == value) {
                 result.push(val)
             }
         })
@@ -2807,29 +2811,27 @@
 
     $("#areaDt").change(function (e) {
         e.preventDefault();
-         areaSelected = $('#areaDt').val();
-         monthSelected = $('#month-1').val();
-         $('#areaSubDt').empty();
+        areaSelected = $('#areaDt').val();
+        monthSelected = $('#month-1').val();
+        $('#areaSubDt').empty();
         $('#areaPhc').empty();
-         let optionSelect = '<option value="0" selected>Select</option>';
-         $('#areaSubDt').append(optionSelect);
+        let optionSelect = '<option value="0" selected>Select</option>';
+        $('#areaSubDt').append(optionSelect);
         $('#areaPhc').append(optionSelect);
-        if(areaSelected != '0')
-        {
-         subdtList= filterCSV(areaDetails, 'area_parent_id', areaSelected)
-         if(subdtList.length > 0)
-                    {
-                        $.each(subdtList, function(key, value) {   
-                            $('#areaSubDt')
-                                .append($('<option>', { value:value.area_id })
-                                .text(value.area_name)); 
-                                
-                             });   
-                    }
+        if (areaSelected != '0') {
+            subdtList = filterCSV(areaDetails, 'area_parent_id', areaSelected)
+            if (subdtList.length > 0) {
+                $.each(subdtList, function (key, value) {
+                    $('#areaSubDt')
+                        .append($('<option>', { value: value.area_id })
+                            .text(value.area_name));
+
+                });
+            }
         }
-         if(areaSelected == '405')
-            areaSelected = 405;    
-        makeAjaxCall(areaSelected, monthSelected);   
+        if (areaSelected == '405')
+            areaSelected = 405;
+        makeAjaxCall(areaSelected, monthSelected);
     });
 
     $("#areaSubDt").change(function (e) {
@@ -2839,51 +2841,48 @@
         $('#areaPhc').empty();
         let optionSelect = '<option value="0" selected>Select</option>';
         $('#areaPhc').append(optionSelect);
-        if(areaSelected != '0')
-        {
-            phcList= filterCSV(areaDetails, 'area_parent_id', areaSelected)
-         if(phcList.length > 0)
-                    {
-                        $.each(phcList, function(key, value) {   
-                            $('#areaPhc')
-                                .append($('<option>', { value:value.area_id })
-                                .text(value.area_name)); 
-                                
-                             });   
-                    }
+        if (areaSelected != '0') {
+            phcList = filterCSV(areaDetails, 'area_parent_id', areaSelected)
+            if (phcList.length > 0) {
+                $.each(phcList, function (key, value) {
+                    $('#areaPhc')
+                        .append($('<option>', { value: value.area_id })
+                            .text(value.area_name));
+
+                });
+            }
         }
-        if(areaSelected == '0')
+        if (areaSelected == '0')
             areaSelected = $('#areaDt').val();
 
-        makeAjaxCall(areaSelected, monthSelected);   
+        makeAjaxCall(areaSelected, monthSelected);
     });
 
     $("#areaPhc").change(function (e) {
-         areaSelected = $('#areaPhc').val();
-         monthSelected = $('#month-1').val();
+        areaSelected = $('#areaPhc').val();
+        monthSelected = $('#month-1').val();
         e.preventDefault();
-        if(areaSelected == '0')
+        if (areaSelected == '0')
             areaSelected = $('#areaSubDt').val();
-        makeAjaxCall(areaSelected, monthSelected);   
+        makeAjaxCall(areaSelected, monthSelected);
 
     });
 
     $("#month-1").change(function (e) {
         areaSelected = $('#areaPhc').val();
-        if(areaSelected == '0'){
+        if (areaSelected == '0') {
             areaSelected = $('#areaSubDt').val();
-            if(areaSelected == '0'){
+            if (areaSelected == '0') {
                 areaSelected = $('#areaDt').val();
             }
         }
 
         monthSelected = $('#month-1').val();
         e.preventDefault();
-        makeAjaxCall(areaSelected, monthSelected);   
+        makeAjaxCall(areaSelected, monthSelected);
     });
 
-    function makeAjaxCall(areaSelected, monthSelected)
-    {
+    function makeAjaxCall(areaSelected, monthSelected) {
         $.ajax({
             url: "{% url 'ajaxArea' fy %}", // the endpoint
             method: "GET", // http method
@@ -2971,7 +2970,7 @@
 
         document.getElementById('st_nopretermbirth').innerHTML = pw_data[0].no_preterm_birth;
 
-        document.getElementById('dt_pretermbirthrate').innerHTML = pw_data[0].preterm_birth_rate + "%";
+        document.getElementById('dt_pretermbirthrate').innerHTML = pw_data[0].preterm_birth_rate;
 
         document.getElementById('st_insti').innerHTML = pw_data[0].no_institutional_delivery;
 
@@ -2983,7 +2982,7 @@
         document.getElementById('st_totchldborn').innerHTML = pw_data[0].tot_chld_born;
 
         document.getElementById('st_totstb').innerHTML = pw_data[0].tot_still_birth;
-        document.getElementById('st_stbirth').innerHTML = pw_data[0].per_still_birth + "%";
+        document.getElementById('st_stbirth').innerHTML = pw_data[0].per_still_birth;
 
         document.getElementById('st_pwttbooster').innerHTML = pw_data[0].pw_tt_booster_given + "%";
 
@@ -3046,8 +3045,8 @@
         // state =  state.replace(/ /g, '_');
         // if(pw_data[0].state != 'state')
         //     {
-       
-            newState = pw_data[0].area_id;
+
+        newState = pw_data[0].area_id;
 
         // newState = newState.replace(/ /g, '_');
         $('a.lc_link').each(function () {
@@ -3066,18 +3065,18 @@
 
     // $(document).ready(function () {
     //     // for FY 2017-2018 PHC dropdown is not visible
-    //     if (fy == '2017-2018' ) { // if somethings' selected
+    //     if (fy == '2017-2018') { // if somethings' selected
     //         $(".phcList")[0].style.visibility = "hidden";  // hide all the elements
     //     }
 
     //     $('#month-1').bind('change', function () {
     //         let value = $(this).val();
-            
+
     //         let elements = $('.phcList').children().show(); // show the ones we want
     //         if (value != 'All') { // if somethings' selected
     //             elements.hide();  // hide all the elements
     //         }
-            
+
     //     }).trigger('change');
 
     //     // Mumbai and Mumbai Suburban PHCs are not visible for time-being
@@ -3087,7 +3086,7 @@
     //         if (value == '421' || value == '422') { // if somethings' selected
     //             elements.hide();  // hide all the elements
     //         }
-            
+
     //     }).trigger('change');
 
     // });
