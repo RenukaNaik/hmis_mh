@@ -2869,13 +2869,13 @@
     });
 
     $("#month-1").change(function (e) {
-        areaSelected = $('#areaPhc').val();
-        if (areaSelected == '0') {
+        // areaSelected = $('#areaPhc').val();
+        // if (areaSelected == '0') {
             areaSelected = $('#areaSubDt').val();
             if (areaSelected == '0') {
                 areaSelected = $('#areaDt').val();
             }
-        }
+        // }
 
         monthSelected = $('#month-1').val();
         e.preventDefault();
