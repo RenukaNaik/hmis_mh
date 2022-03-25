@@ -114,8 +114,9 @@
 
 <div id="tooltip" class="hidden">
   <p><span id="stateN" style="font-weight: bold"></span></p>
-  <p><strong><span id="paraText"></span></strong><span id="value" style="font-weight: bold"> 100</span>%(<span id="num" style="font-weight: bold"> 100</span>)</p>
+  <p><strong><span id="paraText"></span></strong><span id="value" style="font-weight: bold"> 100</span><span id="num" style="font-weight: bold"> 100</span></p>
   <p><strong>Registered PW contribution: </strong><span id="enrlval" style="font-weight: bold">10</span>%(<span id="numEnrl" style="font-weight: bold"> 100</span>)</p>
+  <p><span id="perthouChild" style="font-weight: bold;"></span></p>
 </div>
 
 
@@ -274,7 +275,9 @@
       div.html("<b>" + "<span id='paraText'>" + 10 + "</span>" + "</b><br>" + arcInitial(d.data) + "%");
     }
 
-    oi = { "area_name": [], "early_anc_register": [], "anc_4_or_more": [], "pw_tt1_given": [], "pw_tt2_given": [], "pw_tt_booster_given": [], "pw_calcium": [],"pw_albendazole": [],"pw_ifa": [],"c_section_deliveries": [],"per_pw_reg_anc": [], "per_still_birth": [], "per_moderate_anaemia": [], "per_severe_anaemia": [], "per_preterm_birth": [], "per_institutional_delivery": [], "per_home_delivery": [] }
+    oi = { "area_name": [], "early_anc_register": [], "anc_4_or_more": [], "pw_tt1_given": [], "pw_tt2_given": [], "pw_tt_booster_given": [], "pw_calcium": [],
+          "pw_albendazole": [],"pw_ifa": [],"c_section_deliveries": [],"per_pw_reg_anc": [], "per_still_birth": [], "per_moderate_anaemia": [], 
+          "per_severe_anaemia": [], "per_preterm_birth": [], "per_institutional_delivery": [], "per_home_delivery": [], "tot_chld_born": [] }
 
     data.forEach(d => {
       oi.area_name.push(d.area_name);
@@ -294,6 +297,7 @@
       oi.per_preterm_birth.push(d.per_preterm_birth);
       oi.per_institutional_delivery .push(d.per_institutional_delivery);
       oi.per_home_delivery.push(d.per_home_delivery);
+      oi.tot_chld_born.push(d.tot_chld_born);
     });
 
     var color = d3.scaleSequential().domain([d3.min(arcInitial(oi)), d3.max(arcInitial(oi))])
@@ -356,16 +360,26 @@
         .attr("class", "arc");
 
       arcEnter.on("mouseover", function (d) {
-        d3.select("#tooltip #stateN").text("State Name:" + d.data.area_name)
+        d3.select("#tooltip #stateN").text("Area Name:" + d.data.area_name)
         d3.select("#tooltip")
           .transition().duration(200)
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 30 + "px")
           .select("#value").text(arcInitial(d.data))
 
-        d3.select("#tooltip #enrlval").text(d.data["per_pw_reg_anc"])
-        d3.select("#tooltip #num").text(arcInitialNum(d.data))
-        d3.select("#tooltip #numEnrl").text(d.data["tot_no_pw_reg_anc"])
+          console.log(arcInitial, "arcInitial") 
+        if(arcInitial == "d => d.per_preterm_birth" || arcInitial == "d => d.per_still_birth"){
+          d3.select("#tooltip #enrlval").text(d.data["per_pw_reg_anc"])
+          d3.select("#tooltip #num").text("(" + arcInitialNum(d.data) + ")")
+          d3.select("#tooltip #numEnrl").text(d.data["tot_no_pw_reg_anc"])  
+          d3.select("#tooltip #perthouChild").text("Total Children Born: " + d.data["tot_chld_born"])
+        }else{
+          d3.select("#tooltip #enrlval").text(d.data["per_pw_reg_anc"])
+          d3.select("#tooltip #num").text("%(" + arcInitialNum(d.data) + ")")
+          d3.select("#tooltip #numEnrl").text(d.data["tot_no_pw_reg_anc"])  
+          d3.select("#tooltip #perthouChild").text('');
+        }                   
+        
 
         d3.select("#tooltip").style("opacity", 1);
 
@@ -434,10 +448,10 @@
       var displayVal = selectedCat.substring(0, selectedCat.length);
       document.getElementById('paraText').innerHTML = displayVal + " Contribution: ";
       if( dtInt > 440 ){
-            document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
+            document.getElementById('bartitleCategory').innerHTML = displayVal + " : Sub-District wise Contribution " + "(" + fy + ")";
           }
       else
-        document.getElementById('bartitleCategory').innerHTML = displayVal + " : State wise Contribution " + "(" + fy + ")";
+        document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
       $('.category a').parents('.dropdown').find('.dropdown-toggle').html(selectedCat + ' <span class="selectedCategory"></span>');
       setArcInitial(selectedCat); 
     }
@@ -448,10 +462,10 @@
 
           document.getElementById('paraText').innerHTML = displayVal + " Contribution: ";
           if( dtInt > 440 ){
-            document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
+            document.getElementById('bartitleCategory').innerHTML = displayVal + " : Sub-District wise Contribution " + "(" + fy + ")";
           }
           else
-            document.getElementById('bartitleCategory').innerHTML = displayVal + " : State wise Contribution " + "(" + fy + ")";
+            document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
           setArcInitial(valCategory);
           makeviz(arcInitial);
     }
@@ -493,10 +507,10 @@
 
       document.getElementById('paraText').innerHTML = displayVal + " Contribution: ";
       if( dtInt > 440 ){
-        document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
+        document.getElementById('bartitleCategory').innerHTML = displayVal + " : Sub-District wise Contribution " + "(" + fy + ")";
       }
       else
-        document.getElementById('bartitleCategory').innerHTML = displayVal + " : State wise Contribution " + "(" + fy + ")";
+        document.getElementById('bartitleCategory').innerHTML = displayVal + " : District wise Contribution " + "(" + fy + ")";
       $(this).parents('.dropdown').find('.dropdown-toggle').html(valCategory + ' <span class="selectedCategory"></span>');
     });
 
@@ -547,6 +561,7 @@
     d.no_institutional_delivery = +d.no_institutional_delivery;
     d.no_home_delivery = +d.no_home_delivery;
     d.per_pw_reg_anc = +d.per_pw_reg_anc;
+    d.tot_chld_born = +d.tot_chld_born;
     d.area_id = +d.area_id;
     d.area_name = d.area_name;
     d.month = d.month;
