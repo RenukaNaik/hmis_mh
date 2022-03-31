@@ -128,7 +128,22 @@
     </select>
   </div>
 
-  <button type="button" class="btn btn-light m-1" onclick="location.href=`{% url 'linenumeric' dist_name fy %}`">Go to Count</button>
+  <div class="p-1">
+    <button type="button" class="btn btn-light" onclick="location.href=`{% url 'linenumeric' dist_name fy %}`">Go to Count</button>
+  </div>
+
+  <div class="flex-auto h-25 m-1">
+      <ul class="flex-wrap nav nav-tabs d-flex" id="myTab" role="tablist">
+          <li class="flex-wrap nav-item">
+          <button class="flex-wrap rounded nav-link active" id="monthlyData" data-toggle="tab" role="tab"
+              aria-controls="Monthly" aria-selected="true" data-value="N">Monthly</button>
+          </li>
+          <li class="flex-wrap nav-item">
+          <button class="flex-wrap rounded nav-link" id="cumulativeData" data-toggle="tab" role="tab"
+              aria-controls="Cumulative" aria-selected="false" data-value="A">Cumulative</button>
+          </li>
+      </ul>
+  </div>
   <!-- <div class="dropdown m-1">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
@@ -175,6 +190,7 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
 <script>
+  let quarterly = false;
   let width = 1000,
     height = 550;
 
@@ -263,7 +279,9 @@
   // Define the line
   var stateline = d3.svg.line()
     .interpolate("linear")
-    .x(function (d) { return xScale(d.month); })
+    .x(function (d) { 
+      // console.log(xScale(d.month), 'd')
+      return xScale(d.month); })
     .y(function (d) { return yScale(d.value); });
 
   var g = svg.append('g')
@@ -619,13 +637,27 @@
     legendbox.selectAll("*").remove();
     setData(st_data, section);
   });
-
+  let filterMonth;
+  if (quarterly == true){
+    filterMonth = ["Upto Apr", "Upto May", "Upto Jun", "Upto Jul", "Upto Aug", "Upto Sep", "Upto Oct", "Upto Nov", "Upto Dec", "Upto Jan", "Upto Feb", "Upto Mar"]
+  }
+  else{
+    filterMonth = [];
+  }
   function setData(data, section) {
-    var dataFilter = data.map(function (d) { return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
+    let filterResult;
+      if(quarterly == true){
 
-    //debugger
-    //   console.log(data,"data in setData")
+        filterResult = data.filter(u => 
+          u.month_id >= 14);
+      }else{
+        filterResult = data.filter(u => 
+          u.month_id < 14);
+      }   
 
+      var dataFilter = filterResult.map(function (d) { 
+      
+      return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
 
     dataFilter.forEach(function (d) {
       d.value = +d.value;
@@ -633,7 +665,7 @@
     // console.log(dataFilter,"dataFilter")
     //debugger
     render(dataFilter);
-    jQuery('h1.page-header').html(section);
+    //jQuery('h1.page-header').html(section);
   }
 
 
@@ -671,5 +703,16 @@
       $(".category a").first().trigger('click');
 
   });
+  $(document).ready(function () {
+        $('#cumulativeData').click(function() {
+            quarterly = true;
+            setData(st_data, section);
+
+        });
+        $('#monthlyData').click(function() {
+            quarterly = false;
+            setData(st_data, section);
+        });
+    });
 </script>
 {% endblock %}

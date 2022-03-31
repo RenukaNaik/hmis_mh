@@ -52,6 +52,7 @@ class MhDSdPw(models.Model):
     per_still_birth = models.DecimalField(max_digits=10, decimal_places=1, blank=True, null=True)
     area_parent_id = models.IntegerField(blank=True, null=True)
     area_id = models.IntegerField(blank=True, null=True)
+    month_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -80,6 +81,7 @@ class MhDSdCd(models.Model):
     per_chld_disease_sam = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     area_parent_id = models.IntegerField(blank=True, null=True)
     area_id = models.IntegerField(blank=True, null=True)
+    month_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -108,6 +110,7 @@ class MhDSdCi(models.Model):
     per_chld_immunzt_dpt3_penta3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     area_parent_id = models.IntegerField(blank=True, null=True)
     area_id = models.IntegerField(blank=True, null=True)
+    month_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

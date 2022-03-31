@@ -79,8 +79,8 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
         # else:
         areaName = MhAreaDetails.objects.filter(Q(area_parent_id__gte = 405)).values('area_name','area_parent_id', 'area_id').distinct().order_by('area_id')
 
-        month_name = MhDSdPw.objects.filter(Q(financial_year=fy_name)).values('month').distinct().order_by('month')
-
+        month_name = MhDSdPw.objects.filter(Q(financial_year=fy_name)).values('month', 'month_id').distinct().order_by('month').exclude(month_id__gte = 14)
+        quarterly = MhDSdPw.objects.filter(Q(financial_year=fy_name)).values('month', 'month_id').distinct().order_by('month').exclude(month_id__lte = 13)
         areaList = json.dumps(list(areaName), cls=DjangoJSONEncoder)
 
         pw_json = serializers.serialize('json', pw_data)
@@ -93,7 +93,7 @@ class RegionOverview(LoginRequiredMixin, TemplateView):
             'cd_data':cd_json
         }
         # ,'phc_list':phc_name
-        return render(request,'dashboard/dt_dashboard.html', {'st_list':st_name, 'dt_list':dt_name, 'areaData':areaList ,'dist_name':area_name, 'context':context, 'months':month_name, 'fy': fy_name})
+        return render(request,'dashboard/dt_dashboard.html', {'st_list':st_name, 'dt_list':dt_name, 'areaData':areaList ,'dist_name':area_name, 'context':context, 'months':month_name, 'quarterly':quarterly, 'fy': fy_name})
 
 
 

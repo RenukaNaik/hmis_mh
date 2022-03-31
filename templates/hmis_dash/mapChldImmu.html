@@ -97,6 +97,18 @@
             <a class="dropdown-item" href="#">Child immunisation DPT and Pentavalent 3rd dose</a>
         </div>
     </div>
+    <div class="flex-auto h-25 m-1">
+      <ul class="flex-wrap nav nav-tabs d-flex" id="myTab" role="tablist">
+          <li class="flex-wrap nav-item">
+          <button class="flex-wrap rounded nav-link active" id="monthlyData" data-toggle="tab" role="tab"
+              aria-controls="Monthly" aria-selected="true" data-value="N">Monthly</button>
+          </li>
+          <li class="flex-wrap nav-item">
+          <button class="flex-wrap rounded nav-link" id="cumulativeData" data-toggle="tab" role="tab"
+              aria-controls="Cumulative" aria-selected="false" data-value="A">Cumulative</button>
+          </li>
+      </ul>
+  </div> 
   <div id="slider-range" class="mx-auto">
     <div class="slider">Slider:</div>
   </div>
@@ -104,15 +116,26 @@
 <div class="row">
     <div class="color_range">Please use Slider to change color range </div>
 </div>
-<div class="row text-center">
-    <div class="col-12 mb-5">
-        <input type="text" id="monthSlider" name="somename" data-provide="slider"
-            data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11,12]"
-            data-slider-ticks-labels='["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]'
-            data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="0"
-            data-slider-tooltip="hide">
-    </div>
+<div class="row text-center" id="monthlySlider">
+  <div class="col-12 mb-5">
+      <input type="text" id="monthSlider" name="somename" data-provide="slider"
+          data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11,12]"
+          data-slider-ticks-labels='["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]'
+          data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="0"
+          data-slider-tooltip="hide">
   </div>
+</div>
+
+<div class="row text-center" id="quarterlySlider" style="display: none;">
+  <div class="col-12 mb-5">
+      <input type="text" id="quarterSlider" name="name" data-provide="slider"
+          data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11]"
+          data-slider-ticks-labels='["April", "Upto May", "Upto Jun", "Upto Jul", "Upto Aug", "Upto Sep", "Upto Oct", "Upto Nov", "Upto Dec", "Upto Jan", "Upto Feb", "Upto Mar"]'
+          data-slider-min="0" data-slider-max="11" data-slider-step="1" data-slider-value="0"
+          data-slider-tooltip="hide">
+  </div>
+</div>
+
 
 <div class="row">
   <div class="col-12">
@@ -964,7 +987,62 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
 //           }
          
 //     });
-	
+$('#quarterSlider').slider().on('slideStop', function (ev) {
+      var val = qtickLabels[ev.value];
+      month_hack = val;
+      g.selectAll("*").remove();
+      rowEnter.selectAll("*").remove();
+      let svgTrans = svg.transition().duration(transitionDuration);
+          // calculation for zoom
+          let transLength = zoomBox.translate.length;
+          let scaleLength = zoomBox.scale.length;
+          let transX, transY, scaleV;
+          if (level !== 0) {
+            transX = zoomBox.translate[transLength - 1][0];
+            transY = zoomBox.translate[transLength - 1][1];
+            scaleV = zoomBox.scale[scaleLength - 1];
+          }
+          
+          if (level === 0) {
+            LocationDataMonth = filterCSV(stData, 'month', month_hack);
+            LocationMonth = addProperty(LocationDataMonth, state);
+            // console.log("LocationDataMonth", LocationDataMonth);
+            // console.log("LocationMonth", LocationMonth);
+
+            makemap(LocationMonth, LocationDataMonth);
+          }
+          else if (level === 1) {
+            LocationDataMonth = filterCSV(dtData, 'month', month_hack);
+            LocationMonth = addProperty(LocationDataMonth, district);
+            //select beats map from project_name
+            let previousProject = levelLocation[levelLocation.length - 1];
+            let selectedjson = selectedSubFeature(LocationMonth, previousProject);
+            let selectedcsv = selectedSubData(LocationDataMonth, previousProject);
+            makemap(selectedjson, selectedcsv);
+          }
+// else if (level === 2) {
+//         LocationDataMonth = filterCSV(beatData, 'month_n', month_hack);
+//         LocationMonth = addProperty(LocationDataMonth, beat);
+//         //select beats map from project_name
+//         let previousProject = levelLocation[levelLocation.length - 1];
+//         let selectedjson = selectedSubFeature(LocationMonth, previousProject);
+//         let selectedcsv = selectedSubData(LocationDataMonth, previousProject);
+//         makemap(selectedjson, selectedcsv);
+//       }
+//       else if (level === 3) {
+//         LocationDataMonth = filterCSV(awcData, 'month_n', month_hack);
+//         LocationMonth = addProperty(LocationDataMonth, beat);
+//         selectedPoints = addProperty(LocationDataMonth, awc);
+//         //select beats map from project_name
+//         let previousbeat = levelLocation[levelLocation.length - 1];
+//         let selectedjson = selectedSubFeature(LocationMonth, previousbeat);
+//         let selectedcsv = selectedSubData(LocationDataMonth, previousbeat);
+//         makemap(selectedjson, selectedcsv);
+//         if (level === 3) {
+//             makegeoPoints(selectedPoints, previousbeat);
+//           }
+//       }
+    }); 
 	   // clicked
       const clicked = d => {
         if (level < 3) {
@@ -1153,12 +1231,96 @@ $('#monthSlider').slider().on('slideStop', function (ev) {
       //  };
    
     //initial map
+    let qtickLabels = ["April", "Upto May", "Upto Jun", "Upto Jul", "Upto Aug", "Upto Sep", "Upto Oct", "Upto Nov", "Upto Dec", "Upto Jan", "Upto Feb", "Upto Mar"]
+
 let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]
-    month_hack = tickLabels[0];
-    let monthdata = filterCSV(stData, 'month', month_hack);
-    let monthjson = addProperty(monthdata, state);
-    makemap(monthjson, monthdata);
-  };
+  month_hack = tickLabels[0];
+  let monthdata = filterCSV(stData, 'month', month_hack);
+  let monthjson = addProperty(monthdata, state);
+  makemap(monthjson, monthdata);
+
+  $(document).ready(function () {
+      $('#cumulativeData').click(function() {
+          $("div.slider-tick-label-container").css("margin-left", "-4.138rem");
+          $("div.slider-tick-label").css("width", "8.25rem");
+
+          $("#quarterlySlider").show();
+          $("#monthlySlider").hide();
+
+          month_hack = qtickLabels[$('#quarterSlider').slider('getValue')];
+          g.selectAll("*").remove();
+          rowEnter.selectAll("*").remove();
+          let svgTrans = svg.transition().duration(transitionDuration);
+          // calculation for zoom
+          let transLength = zoomBox.translate.length;
+          let scaleLength = zoomBox.scale.length;
+          let transX, transY, scaleV;
+          if (level !== 0) {
+            transX = zoomBox.translate[transLength - 1][0];
+            transY = zoomBox.translate[transLength - 1][1];
+            scaleV = zoomBox.scale[scaleLength - 1];
+          }
+          
+          if (level === 0) {
+            LocationDataMonth = filterCSV(stData, 'month', month_hack);
+            LocationMonth = addProperty(LocationDataMonth, state);
+            // console.log("LocationDataMonth", LocationDataMonth);
+            // console.log("LocationMonth", LocationMonth);
+
+            makemap(LocationMonth, LocationDataMonth);
+          }
+          else if (level === 1) {
+            LocationDataMonth = filterCSV(dtData, 'month', month_hack);
+            LocationMonth = addProperty(LocationDataMonth, district);
+            //select beats map from project_name
+            let previousProject = levelLocation[levelLocation.length - 1];
+            let selectedjson = selectedSubFeature(LocationMonth, previousProject);
+            let selectedcsv = selectedSubData(LocationDataMonth, previousProject);
+            makemap(selectedjson, selectedcsv);
+          }
+      });
+      $('#monthlyData').click(function() {
+          $("div.slider-tick-label-container").css("margin-left", "-3.792rem");
+          $("div.slider-tick-label").css("width", "7.583rem");
+          
+          $("#quarterlySlider").hide();
+          $("#monthlySlider").show();
+
+          month_hack = tickLabels[$('#monthSlider').slider('getValue')];
+          g.selectAll("*").remove();
+          rowEnter.selectAll("*").remove();
+          let svgTrans = svg.transition().duration(transitionDuration);
+          // calculation for zoom
+          let transLength = zoomBox.translate.length;
+          let scaleLength = zoomBox.scale.length;
+          let transX, transY, scaleV;
+          if (level !== 0) {
+            transX = zoomBox.translate[transLength - 1][0];
+            transY = zoomBox.translate[transLength - 1][1];
+            scaleV = zoomBox.scale[scaleLength - 1];
+          }
+          
+          if (level === 0) {
+            LocationDataMonth = filterCSV(stData, 'month', month_hack);
+            LocationMonth = addProperty(LocationDataMonth, state);
+            // console.log("LocationDataMonth", LocationDataMonth);
+            // console.log("LocationMonth", LocationMonth);
+
+            makemap(LocationMonth, LocationDataMonth);
+        }
+        else if (level === 1) {
+          LocationDataMonth = filterCSV(dtData, 'month', month_hack);
+          LocationMonth = addProperty(LocationDataMonth, district);
+          //select beats map from project_name
+          let previousProject = levelLocation[levelLocation.length - 1];
+          let selectedjson = selectedSubFeature(LocationMonth, previousProject);
+          let selectedcsv = selectedSubData(LocationDataMonth, previousProject);
+          makemap(selectedjson, selectedcsv);
+        }
+      });
+  });
+};
+
 
   async function fetchGeoJSON() {
     let geoJSONBundle = {};

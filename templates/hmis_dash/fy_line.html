@@ -128,9 +128,19 @@
             {% endfor %}
         </select>
     </div>
-
-  <button type="button" class="btn btn-light m-1" onclick="location.href=`{% url 'fy_lineNum' dist_name fy %}`">Go to Count</button>
-
+    <button type="button" class="btn btn-light m-1" onclick="location.href=`{% url 'fy_lineNum' dist_name fy %}`">Go to Count</button>
+    <div class="flex-auto h-25 m-1">
+        <ul class="flex-wrap nav nav-tabs d-flex" id="myTab" role="tablist">
+            <li class="flex-wrap nav-item">
+            <button class="flex-wrap rounded nav-link active" id="monthlyData" data-toggle="tab" role="tab"
+                aria-controls="Monthly" aria-selected="true" data-value="N">Monthly</button>
+            </li>
+            <li class="flex-wrap nav-item">
+            <button class="flex-wrap rounded nav-link" id="cumulativeData" data-toggle="tab" role="tab"
+                aria-controls="Cumulative" aria-selected="false" data-value="A">Cumulative</button>
+            </li>
+        </ul>
+    </div>
 
     <!-- <div class="dropdown m-1">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -180,7 +190,7 @@
 <script>
     let width = 1000,
         height = 550;
-
+        let quarterly = false;
     let sel_fy = '{{ fy }}';
     let sel_st = '{{ dist_name }}';
 
@@ -625,7 +635,17 @@
     });
 
     function setData(data, section) {
-        var dataFilter = data.map(function (d) { return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
+    let filterResult;
+
+    if(quarterly == true){
+      filterResult = data.filter(u => u.month_id >= 14);
+    }else{
+      filterResult = data.filter(u => u.month_id < 14);
+    }   
+
+          var dataFilter = filterResult.map(function (d) { 
+
+          return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
 
         //debugger
 
@@ -634,7 +654,7 @@
         });
         //debugger
         render(dataFilter);
-        jQuery('h1.page-header').html(section);
+        //jQuery('h1.page-header').html(section);
     }
 
 
@@ -669,6 +689,16 @@
         if (choices.length <= 0)
             $(".category a").first().trigger('click');
 
+    });
+    $(document).ready(function () {
+        $('#cumulativeData').click(function() {
+            quarterly = true;
+            setData(fyData, section);
+        });
+        $('#monthlyData').click(function() {
+            quarterly = false;
+            setData(fyData, section);
+        });
     });
 </script>
 {% endblock %}

@@ -36,7 +36,6 @@ class hmisBarChart(LoginRequiredMixin, TemplateView):
             i.update(area_n[0])
 
         jsondata = json.dumps(data, cls=DjangoJSONEncoder)
-        
         return render(request,'hmis_dash/barchart.html', {'data':jsondata, 'fy': fy_name, 'dist_name': district})
 
 
@@ -52,11 +51,11 @@ class hmisLineChart(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -79,11 +78,11 @@ class fyLine(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdPw.objects.filter(Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdPw.objects.filter(Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -107,11 +106,11 @@ class fyLineNum(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdPw.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdPw.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -162,11 +161,11 @@ class hmisLineNumericChart(LoginRequiredMixin, TemplateView):
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
 
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdPw.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -215,11 +214,11 @@ class chldImmuLine(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -270,11 +269,11 @@ class chldImmuLineNumeric(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -323,11 +322,11 @@ class chldDiseaseLine(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -376,11 +375,11 @@ class chldDiseaseLineNumeric(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter(Q(financial_year=fy_name) & (Q(area_parent_id=22))).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -633,11 +632,11 @@ class fyChldImmuLine(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCi.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCi.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -661,11 +660,11 @@ class fyChldImmuLineNum(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCi.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCi.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCi.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -688,11 +687,11 @@ class fyChldDiseaseLine(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCd.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCd.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:
@@ -715,11 +714,11 @@ class fyChldDiseaseLineNum(LoginRequiredMixin, TemplateView):
         if dtint > 440:
             area_parent = MhAreaDetails.objects.all().filter(area_id=dtint).only('area_parent_id')
             areaParentId = area_parent[0].area_parent_id
-            data = list(MhDSdCd.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter( Q(area_parent_id=areaParentId)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=areaParentId)).values('area_name', 'area_id').distinct().order_by('area_id')
             
         else:    
-            data = list(MhDSdCd.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month='All').values())
+            data = list(MhDSdCd.objects.filter( Q(area_parent_id=22)).order_by('month').exclude(month_id = 13).values())
             area_list = MhAreaDetails.objects.filter(Q(area_parent_id=22)).values('area_name', 'area_id').distinct().order_by('area_id')
 
         for i in data:

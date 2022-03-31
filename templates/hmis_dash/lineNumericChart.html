@@ -106,10 +106,10 @@
       <a class="dropdown-item" href="#">Total no of PW registered for ANC</a>
       <a class="dropdown-item" href="#">Early ANC Registeration</a>
       <a class="dropdown-item" href="#">PW received 4 or more ANC check ups</a>
-      <a class="dropdown-item" href="#">PW given TT1</a>
-      <a class="dropdown-item" href="#">PW given TT2</a>
-      <a class="dropdown-item" href="#">PW given TT Booster</a>
-      <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
+      <a class="dropdown-item" href="#">PW given TT1</a>
+      <a class="dropdown-item" href="#">PW given TT2</a>
+      <a class="dropdown-item" href="#">PW given TT Booster</a>
+      <a class="dropdown-item" href="#">PW given 360 Calcium tablets</a>
       <a class="dropdown-item" href="#">PW given 180 Iron Folic Acid (IFA) tablets</a>
       <a class="dropdown-item" href="#">PW given one Albendazole tablet after 1st trimester</a>
       <a class="dropdown-item" href="#">Number of Moderately Anaemic PW</a>
@@ -130,7 +130,18 @@
   </div>
 
   <button type="button" class="btn btn-light m-1" onclick="location.href=`{% url 'linechart' dist_name fy %}`">Go to Percent</button>
-
+  <div class="flex-auto h-25 m-1">
+    <ul class="flex-wrap nav nav-tabs d-flex" id="myTab" role="tablist">
+        <li class="flex-wrap nav-item">
+        <button class="flex-wrap rounded nav-link active" id="monthlyData" data-toggle="tab" role="tab"
+            aria-controls="Monthly" aria-selected="true" data-value="N">Monthly</button>
+        </li>
+        <li class="flex-wrap nav-item">
+        <button class="flex-wrap rounded nav-link" id="cumulativeData" data-toggle="tab" role="tab"
+            aria-controls="Cumulative" aria-selected="false" data-value="A">Cumulative</button>
+        </li>
+    </ul>
+</div> 
   <!-- <div class="dropdown m-1">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
@@ -179,7 +190,7 @@
 <script>
   let width = 1000,
     height = 550;
-
+    let quarterly = false;
   //   let prjType = 'Urban';
   let selectedArea = "{{ dist_name }}";
   let areaName = [];
@@ -578,13 +589,13 @@
       section = 'no_early_anc_register';
     else if (val == 'PW received 4 or more ANC check ups')
       section = 'no_anc_4_or_more';
-    else if (val == 'PW given TT1')
+    else if (val == 'PW given TT1')
       section = 'no_pw_given_tt1';
-    else if (val == 'PW given TT2')
+    else if (val == 'PW given TT2')
       section = 'no_pw_given_tt2';
-    else if (val == 'PW given TT Booster')
+    else if (val == 'PW given TT Booster')
       section = 'no_pw_given_tt_booster';
-    else if (val == 'PW given 360 Calcium tablets')
+    else if (val == 'PW given 360 Calcium tablets')
       section = 'no_pw_given_calcium';
     else if (val == 'PW given 180 Iron Folic Acid (IFA) tablets')
       section = 'no_pw_given_ifa';
@@ -615,8 +626,15 @@
     setData(st_data, section);
   });
 
-  function setData(data, section) {
-    var dataFilter = data.map(function (d) { return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
+    function setData(data, section) {
+    let filterResult;
+    console.log(data,"data in setData");
+    if(quarterly == true){
+      filterResult = data.filter(u => u.month_id >= 14);
+    }else{
+      filterResult = data.filter(u => u.month_id < 14);
+    }
+    var dataFilter = filterResult.map(function (d) { return { financial_year: d.financial_year, month: d.month, areaID:d.area_id, areaN: d.area_name, value: d[section] } })
 
     //debugger
     //   console.log(data,"data in setData")
@@ -662,6 +680,16 @@
     if (choices.length <= 0)
       $(".category a").first().trigger('click');
 
+  });
+  $(document).ready(function () {
+    $('#cumulativeData').click(function() {
+        quarterly = true;
+        setData(st_data, section);
+    });
+    $('#monthlyData').click(function() {
+        quarterly = false;
+        setData(st_data, section);
+    });
   });
 </script>
 {% endblock %}

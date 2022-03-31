@@ -96,12 +96,32 @@
 <form method="POST" name="hmis">
     {% csrf_token %}
     <div class="row mt-2 ml-2">
-        <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="monthlyData" value="m" checked>
+            <label class="form-check-label" for="monthlyData">
+            Monthly
+            </label>
+        </div>
+        <div class="form-check ml-4">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="cumulativeData" value="c">
+            <label class="d-inline-block" for="cumulativeData">
+            Cumulative
+            </label>
+        </div>
+        <div class="form-group ml-5">
             <label class="d-inline-block" for="month_select">Select Month:</label>
 
-            <select class="custom-select" name="month_select" id="month-1" style="width: auto">
+            <select class="custom-select monthly" name="month_select" id="month-1" style="width: auto">
                 {% for month_select in months %}
-                <option value="{{ month_select.month }}">{{ month_select.month}}
+                <option value="{{ month_select.month_id }}">{{ month_select.month}}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select class="custom-select quarterly" name="month_select" id="month-2" style="width: auto; display: none;">
+                <!-- <option value="17">Apr</option> -->
+                {% for month_select in quarterly %}
+                <option value="{{ month_select.month_id }}">{{ month_select.month}}
                 </option>
                 {% endfor %}
             </select>
@@ -133,7 +153,7 @@
                 </select>
             </div>
         </div>
-        <!-- <div class="phcList">
+         <div class="phcList">
             <div class="form-group">
 
                 <label class="d-inline-block ml-5" for="area_select">Select PHC:</label>
@@ -145,7 +165,7 @@
                     {% endfor %}
                 </select>
             </div>
-        </div> -->
+        </div> 
     </div>
 
 </form>
@@ -2881,6 +2901,20 @@
         e.preventDefault();
         makeAjaxCall(areaSelected, monthSelected);
     });
+    
+    $("#month-2").change(function (e) {
+        // areaSelected = $('#areaPhc').val();
+        // if (areaSelected == '0') {
+            areaSelected = $('#areaSubDt').val();
+            if (areaSelected == '0') {
+                areaSelected = $('#areaDt').val();
+            }
+        // }
+
+        monthSelected = $('#month-2').val();
+        e.preventDefault();
+        makeAjaxCall(areaSelected, monthSelected);
+    });
 
     function makeAjaxCall(areaSelected, monthSelected) {
         $.ajax({
@@ -3063,33 +3097,99 @@
     }
 
 
-    // $(document).ready(function () {
-    //     // for FY 2017-2018 PHC dropdown is not visible
-    //     if (fy == '2017-2018') { // if somethings' selected
-    //         $(".phcList")[0].style.visibility = "hidden";  // hide all the elements
-    //     }
+      $(document).ready(function () {
+          // for FY 2017-2018 PHC dropdown is not visible
+          if (fy == '2017-2018') { // if somethings' selected
+              $(".phcList")[0].style.visibility = "hidden";  // hide all the elements
+          }
 
-    //     $('#month-1').bind('change', function () {
-    //         let value = $(this).val();
+          $('#month-1').bind('change', function () {
+              let value = $(this).val();
 
-    //         let elements = $('.phcList').children().show(); // show the ones we want
-    //         if (value != 'All') { // if somethings' selected
-    //             elements.hide();  // hide all the elements
-    //         }
+              let elements = $('.phcList').children().show(); // show the ones we want
+              if (value != 'All') { // if somethings' selected
+                  elements.hide();  // hide all the elements
+              }
 
-    //     }).trigger('change');
+          }).trigger('change');
 
-    //     // Mumbai and Mumbai Suburban PHCs are not visible for time-being
-    //     $('#areaDt').bind('change', function () {
-    //         let value = $(this).val();
-    //         var elements = $('.phcList').children().show(); // show the ones we want
-    //         if (value == '421' || value == '422') { // if somethings' selected
-    //             elements.hide();  // hide all the elements
-    //         }
+          // Mumbai and Mumbai Suburban PHCs are not visible for time-being
+          $('#areaDt').bind('change', function () {
+              let value = $(this).val();
+              var elements = $('.phcList').children().show(); // show the ones we want
+              if (value == '421' || value == '422') { // if somethings' selected
+                  elements.hide();  // hide all the elements
+              }
 
-    //     }).trigger('change');
+          }).trigger('change');
 
-    // });
+      });
+      $(document).ready(function () {
+        $('#cumulativeData').click(function() {
+
+            $(".quarterly").show();
+            $(".monthly").hide();
+            $("#month-2").val(17);
+            areaSelected = $('#areaSubDt').val();
+            if (areaSelected == '0') {
+                areaSelected = $('#areaDt').val();
+            }
+            monthSelected = $('#month-2').val();
+            dtSelected = $('#areaDt').val();
+
+            $.ajax({
+                url: "{% url 'ajaxArea' fy %}", // the endpoint
+                method: "GET", // http method
+                data: {
+                    area: $('#areaSt').val(),
+                    month: $('#month-2').val(),
+                    area_district: $('#areaDt').val()
+                },
+                success: function (response) {
+                    let pw_dataAjax = JSON.parse(response.context.pw_data);
+                    let ci_dataAjax = JSON.parse(response.context.ci_data);
+                    let cd_dataAjax = JSON.parse(response.context.cd_data);
+
+                    let district = response.dist_name;
+                    updateData(pw_dataAjax, ci_dataAjax, cd_dataAjax);
+
+                }
+            });
+        });
+
+        $('#monthlyData').click(function() {
+
+            $(".quarterly").hide();
+            $(".monthly").show();
+            $("#month-1").val(13);
+            areaSelected = $('#areaSubDt').val();
+            if (areaSelected == '0') {
+                areaSelected = $('#areaDt').val();
+            }
+            monthSelected = $('#month-1').val();
+            dtSelected = $('#areaDt').val();
+
+            $.ajax({
+                url: "{% url 'ajaxArea' fy %}", // the endpoint
+                method: "GET", // http method
+                data: {
+                    area: $('#areaSt').val(),
+                    month: $('#month-1').val(),
+                    area_district: $('#areaDt').val()
+                },
+                success: function (response) {
+                    let pw_dataAjax = JSON.parse(response.context.pw_data);
+                    let ci_dataAjax = JSON.parse(response.context.ci_data);
+                    let cd_dataAjax = JSON.parse(response.context.cd_data);
+
+                    let district = response.dist_name;
+                    updateData(pw_dataAjax, ci_dataAjax, cd_dataAjax);
+
+                }
+            });
+        });
+
+    });
 
 </script>
 

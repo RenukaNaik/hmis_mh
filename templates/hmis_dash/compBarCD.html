@@ -7,43 +7,20 @@
 <link rel="stylesheet" href="{% static 'hmis_dash/css/index.css' %}">
 
 <style>
-  .full-height {
-    height: 100%;
+  .panel {
+    background-color: #D9D1C7;
   }
 
-  .header {
-    height: 50px;
+  .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
   }
 
-  #b2 {
-    display: block;
-  }
-  
-  text {
-    font-size: 1.1rem
+  .bar {
+    fill: steelblue;
   }
 
-  .scroll-down {
-    float: right;
-    font-size: calc(40% + 0.5vw + 0.5vh);
-  }
-  
-  div.tooltip {
-    position: absolute;
-    text-align: center;
-    width: auto;
-    height: auto;
-    color: rgb(5, 14, 145);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: calc(30% + 0.5vw + 0.5vh);
-    font-weight: bold;
-    z-index: 10;
-    background: rgb(233, 235, 241);
-    padding: 10px;
-    border: 3px solid black;
-    border-radius: 10px;
-    /* box-shadow: 0 0px 10px black; */
-  }
 </style>
 
 {% endblock %}
@@ -51,193 +28,112 @@
 {% block feature %}
 
 <div class="row">
-    <div class="col-12 h-75">
-        <div class="heading text-center" id="barTitle"> Indicator </div>
-    </div>
-</div>
-
-<!-- <div class="row header h-75">
-  <div class="col bg-info">
+  <div class="col-12 h-75">
+    <div class="heading text-center" id="barTitle"> India-Statewise </div>
   </div>
-</div> -->
+</div>
 
 <div class="row bg-dark">
+    <div class="col-xs-8 col-sm-8 col-md-6 bg-dark">
 
-  <div class="col-xs-8 col-sm-8 col-md-6 bg-dark">
+      <select class="custom-select mt-1 p-2" id="category1" style="width: auto">
+        <option value="per_chld_disease_pneumonia">Childhood Diseases-Pneumonia</option>
+        <option value="per_chld_disease_sepsis">Childhood Diseases-Sepsis</option>
+        <option value="per_chld_disease_tb">Childhood Diseases-Tuberculosis(TB)</option>
+        <option value="per_chld_disease_malaria">Childhood Diseases-Malaria</option>
+        <option value="per_chld_disease_diarrhoea">Childhood Diseases-Diarrhoea</option>
+        <option value="per_chld_disease_diarrhoea_trtd_inpatnt">Childhood Diseases-Diarrhoea treated in Inpatients</option>
+        <option value="per_chld_admtd_upper_resp_infec">Children admitted with upper respiratory infections</option>
+        <option value="per_chld_disease_sam">Childhood Diseases-Severe Acute Malnutrition(SAM)</option>
+      </select>
 
-    <div class="dropdown m-1">
-
-      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-
-        Select Category
-
-        <span class="selectedCategory"></span>
-
-      </button>
-
-      <div class="dropdown-menu category" aria-labelledby="dropdownMenuButton">
-
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-      </div>
-
-
-
-    </div>
-    <button class='btn btn-light toggle m-1'>Compare</button>
-  </div>
-
-
-
-  <div class="col-xs-4 col-sm-4 col-md-6 bg-dark">
-    
-    <div class="dropdown m-1" id="cat2">
-
-      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-
-        Select Category
-
-        <span class="selectedCategory"></span>
-
-      </button>
-
-      <div class="dropdown-menu category2" aria-labelledby="dropdownMenuButton">
-
-        <a class="dropdown-item" href="#">Childhood Diseases-Pneumonia</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Sepsis</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Tuberculosis(TB)</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Malaria</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Diarrhoea treated in Inpatients</a>
-            <a class="dropdown-item" href="#">Children admitted with upper respiratory infections</a>
-            <a class="dropdown-item" href="#">Childhood Diseases-Severe Acute Malnutrition(SAM)</a>
-
+      <div class="row m-1">
+        <div class="flex-auto m-1">
+          <ul class="flex-wrap nav nav-tabs d-flex" id="myTab" role="tablist">
+              <li class="flex-wrap nav-item">
+              <button class="flex-wrap rounded nav-link active" id="monthlyData" data-toggle="tab" role="tab"
+                  aria-controls="Monthly" aria-selected="true" data-value="N">Monthly</button>
+              </li>
+              <li class="flex-wrap nav-item">
+              <button class="flex-wrap rounded nav-link" id="cumulativeData" data-toggle="tab" role="tab"
+                  aria-controls="Cumulative" aria-selected="false" data-value="A">Cumulative</button>
+              </li>
+          </ul>
+        </div>   
       </div>
     </div>
-  </div>
 
-
-</div>
-  <div class="scroll-down">
-    Please click "<b>Compare</b>" button if you want to see Indicators Comparison
-  </div>
-
-<div class="row text-center">
-    <div class="col-12 mb-5">
-        <input type="text" id="monthSlider" name="somename" data-provide="slider"
-            data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11,12]"
-            data-slider-ticks-labels='["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]'
-            data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="0"
-            data-slider-tooltip="hide">
+    <div class="col-xs-4 col-sm-4 col-md-6 bg-dark">
+      <select class="custom-select mt-1 p-2" id="category2" style="width: auto">
+        <option value="per_chld_disease_pneumonia">Childhood Diseases-Pneumonia</option>
+        <option value="per_chld_disease_sepsis">Childhood Diseases-Sepsis</option>
+        <option value="per_chld_disease_tb">Childhood Diseases-Tuberculosis(TB)</option>
+        <option value="per_chld_disease_malaria">Childhood Diseases-Malaria</option>
+        <option value="per_chld_disease_diarrhoea">Childhood Diseases-Diarrhoea</option>
+        <option value="per_chld_disease_diarrhoea_trtd_inpatnt">Childhood Diseases-Diarrhoea treated in Inpatients</option>
+        <option value="per_chld_admtd_upper_resp_infec">Children admitted with upper respiratory infections</option>
+        <option value="per_chld_disease_sam">Childhood Diseases-Severe Acute Malnutrition(SAM)</option>
+      </select>
     </div>
+  
 </div>
 
+<div class="row text-center m-3" id="monthlySlider">
+  <div class="col-12">
+    <input type="text" id="monthSlider" name="somename" data-provide="slider"
+      data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11,12]"
+      data-slider-ticks-labels='["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]'
+      data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+  </div>
+</div>
+
+<div class="row text-center m-3" id="quarterlySlider" style="display: none;">
+  <div class="col-12 mb-3">
+    <input type="text" id="quarterSlider" name="name" data-provide="slider"
+      data-slider-ticks="[0, 1, 2, 3, 4, 5,6,7,8,9,10,11]"
+      data-slider-ticks-labels='["April", "Upto May", "Upto Jun", "Upto Jul", "Upto Aug", "Upto Sep", "Upto Oct", "Upto Nov", "Upto Dec", "Upto Jan", "Upto Feb", "Upto Mar"]'
+      data-slider-min="0" data-slider-max="11" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+  </div>
+</div>
+<!-- <div class="scroll-down">
+  Please click "<b>Compare</b>" button if you want to see Indicators Comparison
+</div>
 <div id='sw' class="spinner-wrapper">
-
   <div class="spinner"></div>
+-->
 
-</div>
-
-<div class="row">
-  <div class="col-6" id='b1'>
-  </div>
-  <div class="col-6" id='b2'>
+<div class="row m-3">
+  <div class="col-12" id='myDiv'>
+    <!-- Plotly chart will be drawn inside this DIV -->
   </div>
 </div>
 
 {% endblock %}
 
 {% block feature_js %}
+<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
 
 <script>
+  let selCat1 = "per_chld_disease_pneumonia",
+    selCat2 = "per_chld_disease_sepsis",
+    quarterly = false;
 
-  const width = 700;
-  const height = 1500;
-
-
-  const tansitionDuration = 500;
-
-  const bar1 = d3.select('#b1').append("svg").attr('id', 'svg1').attr('width', 700).attr('height', 1600).call(responsivefy);
-
-  const bar2 = d3.select('#b2').append("svg").attr('id', 'svg2').attr('width', 700).attr('height', 1600).call(responsivefy);
-
-
-  function responsivefy(svg) {
-
-    // Container is the DOM element, svg is appended. 
-    // Then we measure the container and find its 
-    // aspect ratio.
-
-    const container = d3.select(svg.node().parentNode),
-      width = parseInt(svg.style('width'), 10),
-      height = parseInt(svg.style('height'), 10),
-      aspect = width / height;
-
-    // console.log("width&height", width, height)
-    // Add viewBox attribute to set the value to initial size 
-    // add preserveAspectRatio attribute to specify how to scale  
-    // and call resize so that svg resizes on page load 
-    svg.attr('viewBox', `0 0 ${width} ${height}`).
-      attr('preserveAspectRatio', 'xMinYMin').
-      call(resize);
-
-    d3.select(window).on('resize.', resize);
-
-    function resize() {
-      const targetWidth = $(window).width();
-      const targetheight = $(window).height();
-      //var targetHeight = $(window).height();
-    //   console.log("tw&h", targetWidth, targetheight);
-      d3.select('#svg1').attr('width', targetWidth);
-      d3.select('#svg1').attr('height', targetheight);
-      d3.select('#svg2').attr('width', targetWidth);
-      d3.select('#svg2').attr('height', targetheight);
-    }
-  }
-
-  let sortByL = 'per_chld_disease_pneumonia';
-
-  let sortByR = 'per_chld_disease_pneumonia';
-
-  let xValue = d => d.per_chld_disease_pneumonia;
-  let xValueR = d => d.per_chld_disease_pneumonia;
-
-  let stateSelected = '{{ dist_name }}';
-
-  let yValue = d => d.area_name;
-
-  const marginLeft = { left: 270, top: 50, right: 0, bottom: 30 };
-
-  const innerWidthLeft = width - marginLeft.left - marginLeft.right;
-
-  const innerHeightLeft = height - marginLeft.top - marginLeft.bottom;
-
-  const marginRight = { left: 270, top: 50, right: 0, bottom: 30 };
-
-  const innerWidthRight = width - marginRight.left - marginRight.right;
-
-  const innerHeightRight = height - marginRight.top - marginRight.bottom;
+  dataFromDjango = {{ data | safe }};
+  // console.log(dataFromDjango, "dataFromDjango")
+  let data;
+  // data = dataFromDjango;
+  let $endpoint = window.location.href // or localhost/interface
 
 
-  const g1 = bar1.append('g').attr('transform', `translate(${marginLeft.left}, ${marginLeft.top})`);
 
-  const g2 = bar2.append('g').attr('transform', `translate(${marginRight.left}, ${marginRight.top})`);
-
-
-  let tooltip = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
-  let bar_height = 40;
+  dataFromDjango.forEach(d => {
+    d.cat1 = +d.cat1;
+    d.cat2 = +d.cat2;
+    d.area_id = +d.area_id;
+    d.area_name = d.area_name;
+    d.month = d.month;
+    d.financial_year = d.financial_year;
+  });
 
   function filterCSV(csv, key, value) {
     var result = [];
@@ -251,427 +147,174 @@
     return result;
   }
 
-
-  const drawLeft = data => {
-
-    const xScaleLeft = d3.scaleLinear().domain([0, 1.2 * (d3.max(data, xValue))]).range([0, innerWidthLeft]);
-
-    const yScale = d3.scaleBand().range([bar_height * data.length, 0]).padding(0.1);
-    yScale.domain(data.map(yValue))
-
-    let getColor;
-
-      getColor = d3.scaleSequential().domain([d3.max(data, xValue), d3.min(data, xValue)])
-      
-        .interpolator(d3.interpolateRdYlGn);
-
-    let chart = g1.selectAll("rect").data(data)
-
-    let chartText = g1.selectAll('text').data(data)
-
-    chart.exit().remove();
-
-    chartText.exit().remove();
-
-    chart.enter().append('rect')
-      .attr('width', d => xScaleLeft(xValue(d)))
-      .attr("y", d => yScale(d.area_name))
-      .attr("height", yScale.bandwidth())
-      .attr("fill", d => getColor(xValue(d)))
-      .on("mouseover", d => {
-        tooltip
-          .transition()
-          .duration(200)
-          .style("opacity", 0.9);
-        tooltip
-          .html(d.area_name + " : " + (xValue(d).toFixed(2)))
-          .style("left", d3.event.pageX + "px")
-          .style("top", d3.event.pageY - 30 + "px");
-      })
-      .on("mouseout", function (d) {
-        tooltip
-          .transition()
-          .duration(500)
-          .style("opacity", 0);
-      });
-
-
-    chartText.enter().append('text')
-      .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
-
-      .text(d => xValue(d).toFixed(2))
-
-      .attr('x', d => xScaleLeft(xValue(d))+ 5)
-
-      .attr('y', d => yScale(d.area_name) + yScale.bandwidth() / 2)
-
-      .attr("font-family", "sans-serif")
-
-      // .attr("font-size", "12px")
-
-      .attr("fill", "blue")
-
-      .attr("font-weight", "bold");
-
-    chart.transition().duration(tansitionDuration)
-
-      .attr('width', d => xScaleLeft(xValue(d)))
-
-      .attr("y", d => yScale(d.area_name))
-
-      .attr("height", yScale.bandwidth())
-      .attr("fill", d => getColor(xValue(d)))
-
-    chartText.transition().duration(tansitionDuration)
-      .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
-
-      .text(d => xValue(d).toFixed(2))
-
-      .attr('x', d => xScaleLeft(xValue(d)))
-
-      .attr('y', d => yScale(d.area_name) + yScale.bandwidth() / 2);
-
-    let xaxisLeft = g1.append('g').call(d3.axisBottom(xScaleLeft))
-
-      .attr('transform', `translate(0, ${bar_height * data.length})`)
-
-    xaxisLeft.selectAll("text").attr("font-size", "12px")
-      .attr("font-weight", "bold")
-      .style("text-anchor", "middle");
-
-    let yaxisLeft = g1.append('g')
-      .call(d3.axisLeft(yScale))
-      .attr("font-size", "12px")
-      .attr("font-weight", "bold"); 
-
+  const render = (fdata) => {
+    // console.log(fdata, "data in render function")
     
-      chart.append("line")
-            .attr("x1", function () { return xScaleLeft(100) })
-            .attr("x2", function () { return xScaleLeft(100) })
-            .attr("y1", 0)
-            .attr("y2", 1.5 * bar_height * data.length)
-            .attr("stroke-width", 4)
-            .attr("stroke-dasharray", '20,10,5,5,5,10')
-            .attr("stroke", "red");
+    // console.log(selCat1, selCat2, "selCat1 and 2")
 
-    // g1.selectAll(".highlighted_bar").remove();
+    var xValue = [];
+    var yValue = [];
+    var yValue2 = [];
+
+    for (var i = 0; i < fdata.length; i++) {
+      let areaName = fdata[i].area_name;
+      let y1, y2;
+      y1 = fdata[i].cat1;
       
-    // g1.selectAll('rect')
-    //     .attr("class", "highlighted_bar")
-    //     .filter(function (d) { return d.area_id == stateSelected; })
-    //     .style("stroke", "black")
-    //     .style("stroke-width", 5);   
+      y2 = fdata[i].cat2;
+      
+      xValue.push(areaName);
+      yValue.push(y1);
+      yValue2.push(y2);
+    }
+
+    var trace1 = {
+      x: xValue,
+      y: yValue,
+      name: setLegend(selCat1),
+      type: 'bar',
+      // text: yValue.map(String),
+      textposition: 'none',
+      hovertemplate: '<b>%{x}</b><br>' + '<b>%{y}</b>',
+      // opacity: 0.5,
+      marker: {
+        color: '#5bc0de',
+        line: {
+          color: '#74AEF6',
+          width: 1.5
+        }
+      },
+      textfont: {
+        family: "sans-serif",
+        color: 'black',
+        size: 20
+      }
+    };
+
+    var trace2 = {
+      x: xValue,
+      y: yValue2,
+      name: setLegend(selCat2),
+      type: 'bar',
+      // text: yValue2.map(String),
+      textposition: 'none',
+      hovertemplate: '<b>%{x}</b><br>' + '<b>%{y}</b>',
+      marker: {
+        color: '#00439D',
+        line: {
+          color: 'rgb(8,48,107)',
+          width: 1.5
+        }
+      },
+      textfont: {
+        family: "sans-serif",
+        color: 'black',
+        // size: 20
+      }
+    };
+
+    var data = [trace1, trace2];
+
+    var layout = {
+      // title: 'January 2013 Sales Report',
+      showlegend: true,
+      legend: {
+        x: 0,
+        y: 1.3,
+        "orientation": "h",
+        font: {
+          family: 'sans-serif',
+          size: 20,
+          color: '#000'
+        }
+      },
+      xaxis: {
+        linewidth: 2,
+        ticks: 'outside',
+        tickcolor: '#000',
+        tickfont: {
+          family: "sans-serif",
+          color: 'black',
+          size: 14
+        }
+      },
+      yaxis: {
+        linewidth: 2,
+        ticks: 'outside',
+        tickcolor: '#000',
+        font: {
+          family: "sans-serif",
+          color: 'black',
+          size: 20
+        }
+      },
+      hoverlabel: {
+        bgcolor: 'black',
+        font: { color: 'white' }
+      },
+      margin: {
+        // t: 200,
+        b: 120,
+        // l: 80,
+        // r:50,
+        pad: 0
+      },
+    };
+    var config = { responsive: true };
+
+    Plotly.newPlot('myDiv', data, layout, { displayModeBar: false }, config);
+  };
 
-  }
+  let tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"]
 
-  //******************************
+  let qtickLabels = ["April", "Upto May", "Upto Jun", "Upto Jul", "Upto Aug", "Upto Sep", "Upto Oct", "Upto Nov", "Upto Dec", "Upto Jan", "Upto Feb", "Upto Mar"]
 
-  const drawRight = data => {
-    // $(".highlighted_bar").remove();
-    const xScaleRight = d3.scaleLinear().domain([0, 1.2 * (d3.max(data, xValueR))]).range([0, innerWidthRight]);
-
-    const yScale = d3.scaleBand().range([bar_height * data.length, 0]).padding(0.1);
-
-    yScale.domain(data.map(yValue))
-
-    let getColor;
-
-      getColor = d3.scaleSequential().domain([d3.max(data, xValueR), d3.min(data, xValueR)])
-        .interpolator(d3.interpolateRdYlGn);
-   
-
-    let chart = g2.selectAll("rect").data(data)
-
-    let chartText = g2.selectAll('text').data(data)
-
-    chart.exit().remove();
-
-    chartText.exit().remove();
-
-    chart.enter().append('rect')
-
-      //.attr('x',d => x(xValue(d)))
-      .attr('width', d => xScaleRight(xValueR(d)))
-
-      .attr("y", d => yScale(d.area_name))
-
-      .attr("height", yScale.bandwidth())
-
-      .attr("fill", d => getColor(xValueR(d)))
-      .on("mouseover", d => {
-        tooltip
-          .transition()
-          .duration(200)
-          .style("opacity", 0.9);
-        tooltip
-          .html(d.area_name + " : " + (xValueR(d).toFixed(2)))
-          .style("left", d3.event.pageX + "px")
-          .style("top", d3.event.pageY - 30 + "px");
-      })
-      .on("mouseout", function (d) {
-        tooltip
-          .transition()
-          .duration(500)
-          .style("opacity", 0);
-      });
-
-    chartText.enter().append('text')
-      .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
-
-      .text(d => xValueR(d).toFixed(2))
-
-      .attr('x', d => xScaleRight(xValueR(d)) + 5)
-
-      .attr('y', d => yScale(d.area_name) + yScale.bandwidth() / 2)
-
-      .attr("font-family", "sans-serif")
-
-      .attr("font-size", "12px")
-
-      .attr("fill", "blue")
-
-      .attr("font-weight", "bold");
-
-
-
-
-    chart.transition().duration(tansitionDuration)
-
-      //.attr('x',d => x(xValue(d)))
-
-      .attr('width', d => xScaleRight(xValueR(d)))
-
-      .attr("y", d => yScale(d.area_name))
-
-      //.attr("height", y.bandwidth())
-      .attr("fill", d => getColor(xValueR(d)));
-
-    chartText.transition().duration(tansitionDuration)
-      .filter(function (d, i) { return i === 0 || i === (data.length - 1) })
-
-      .text(d => xValueR(d).toFixed(2))
-
-      .attr('x', d => xScaleRight(xValueR(d)))
-
-      .attr('y', d => yScale(d.area_name) + yScale.bandwidth() / 2);
-
-
-    let xaxisRight = g2.append('g').call(d3.axisBottom(xScaleRight))
-
-      .attr('transform', `translate(0, ${bar_height * data.length})`);
-
-
-
-    xaxisRight.selectAll("text").attr("font-size", "12px")
-      .attr("font-weight", "bold")
-      .style("text-anchor", "middle");
-
-
-
-
-    let yaxisRight = g2.append('g')
-
-      .call(d3.axisLeft(yScale))
-
-      .attr("font-size", "12px")
-
-      .attr("font-weight", "bold");
-
-
-    g2.append("line")
-        .attr("x1", function () { return xScaleLeft(100) })
-        .attr("x2", function () { return xScaleLeft(100) })
-        .attr("y1", 0)
-        .attr("y2", 1.5 * bar_height * data.length)
-        .attr("stroke-width", 4)
-        .attr("stroke-dasharray", '20,10,5,5,5,10')
-        .attr("stroke", "red");  
-
-    // g2.selectAll('rect')
-    // .attr("class", "highlighted_bar")
-    // .filter(function (d) { return d.area_id == stateSelected; })
-    // .style("stroke", "black")
-    // .style("stroke-width", 5);     
-
-  }
-
-  const sortData = (data, parameter) => {
-
-    let sortedData = data.slice().sort((a, b) => d3.descending(a[parameter], b[parameter]))
-
-    return sortedData;
-
-  }
-
-  data_from_django = {{ data | safe }};
-
-  var data = []
-
-  data_from_django.forEach(element => {
-    if (element.per_chld_disease_pneumonia > 200)
-            element.per_chld_disease_pneumonia = 200;
-        if (element.per_chld_disease_sepsis > 200)
-            element.per_chld_disease_sepsis = 200;
-        if (element.per_chld_disease_tb > 200)
-            element.per_chld_disease_tb = 200;
-        if (element.per_chld_disease_malaria > 200)
-            element.per_chld_disease_malaria = 200;
-        if (element.per_chld_disease_diarrhoea > 200)
-            element.per_chld_disease_diarrhoea = 200;
-        if (element.per_chld_disease_diarrhoea_trtd_inpatnt > 200)
-            element.per_chld_disease_diarrhoea_trtd_inpatnt = 200;
-        if (element.per_chld_admtd_upper_resp_infec > 200)
-            element.per_chld_admtd_upper_resp_infec = 200;
-        if (element.per_chld_disease_sam > 200)
-            element.per_chld_disease_sam = 200;
-
-        data.push(element);
-    });
-
-  data.forEach(d => {
-    d.per_chld_disease_pneumonia = +d.per_chld_disease_pneumonia;
-        d.per_chld_disease_sepsis = +d.per_chld_disease_sepsis;
-        d.per_chld_disease_tb = +d.per_chld_disease_tb;
-        d.per_chld_disease_malaria = +d.per_chld_disease_malaria;
-        d.per_chld_disease_diarrhoea = +d.per_chld_disease_diarrhoea;
-        d.per_chld_disease_diarrhoea_trtd_inpatnt = +d.per_chld_disease_diarrhoea_trtd_inpatnt;
-        d.per_chld_admtd_upper_resp_infec = +d.per_chld_admtd_upper_resp_infec;
-        d.per_chld_disease_sam = +d.per_chld_disease_sam;
-        d.area_id = d.area_id;
-        d.area_name = d.area_name;
-        d.month = d.month;
-        d.financial_year = d.financial_year;
-
-  });
-
-
-  var tickLabels = ["All", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",  "Jan", "Feb", "Mar"]
-
+  //On month change
   $('#monthSlider').slider().on('slideStop', function (ev) {
     var val = tickLabels[ev.value];
-    filterdata = filterCSV(data, 'month', val);
-    monthDataL = sortData(filterdata, sortByL);
-    monthDataR = sortData(filterdata, sortByR);
-    drawLeft(monthDataL);
-    drawRight(monthDataR);
+    console.log(val, 'month')
+    $.ajax({
+      method: "GET",
+      url: $endpoint,
+      data: {
+        'cat1': selCat1,
+        'cat2': selCat2,
+        'month': val
+      },
+      success: handleFormSuccess,
+      error: handleFormError,
+    })
   });
 
-
-  $(".category a").click(function () {
-
-    $(this).parents(".dropdown").find('.btn').html($(this).text());
-
-    let valCategory = $(this).text();
-    displayLeftChart(valCategory)
-
+  $('#quarterSlider').slider().on('slideStop', function (ev) {
+    let val = qtickLabels[ev.value];
+    console.log(val, 'month in quarter')
+    $.ajax({
+      method: "GET",
+      url: $endpoint,
+      data: {
+        'cat1': selCat1,
+        'cat2': selCat2,
+        'month': val
+      },
+      success: handleFormSuccess,
+      error: handleFormError,
+    })
   });
 
-  function displayLeftChart(valCategory)
-  {
-    var displayVal = valCategory.substring(0, valCategory.length);
-        let fy = '{{ fy }}';
-        document.getElementById('barTitle').innerHTML = "(%) Indicator: " + displayVal + " (" + fy + ")";
+  //Initial Rendering
+  render(dataFromDjango);
 
-    switch (valCategory) {
-
-            case "Childhood Diseases-Pneumonia": xValue = d => d.per_chld_disease_pneumonia; sortByL = 'per_chld_disease_pneumonia'; break;
-
-            case "Childhood Diseases-Sepsis": xValue = d => d.per_chld_disease_sepsis; sortByL = 'per_chld_disease_sepsis'; break;
-
-            case "Childhood Diseases-Tuberculosis(TB)": xValue = d => d.per_chld_disease_tb; sortByL = 'per_chld_disease_tb'; break;
-
-            case "Childhood Diseases-Malaria": xValue = d => d.per_chld_disease_malaria; sortByL = 'per_chld_disease_malaria'; break;
-
-            case "Childhood Diseases-Diarrhoea": xValue = d => d.per_chld_disease_diarrhoea; sortByL = 'per_chld_disease_diarrhoea'; break;
-
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValue = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByL = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
-
-            case "Children admitted with upper respiratory infections": xValue = d => d.per_chld_admtd_upper_resp_infec; sortByL = 'per_chld_admtd_upper_resp_infec'; break;
-
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValue = d => d.per_chld_disease_sam; sortByL = 'per_chld_disease_sam'; break;
-    }
-
-    var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
-    filterdata = filterCSV(data, 'month', valMonth);
-    monthDataL = sortData(filterdata, sortByL);
-    drawLeft(monthDataL);
-  }
-
-
-
-  $(".category2 a").click(function () {
-
-    $(this).parents(".dropdown").find('.btn').html($(this).text());
-
-    let valCategory = $(this).text();
-
-    switch (valCategory) {
-
-            case "Childhood Diseases-Pneumonia": xValueR = d => d.per_chld_disease_pneumonia; sortByR = 'per_chld_disease_pneumonia'; break;
-
-            case "Childhood Diseases-Sepsis": xValueR = d => d.per_chld_disease_sepsis; sortByR = 'per_chld_disease_sepsis'; break;
-
-            case "Childhood Diseases-Tuberculosis(TB)": xValueR = d => d.per_chld_disease_tb; sortByR = 'per_chld_disease_tb'; break;
-
-            case "Childhood Diseases-Malaria": xValueR = d => d.per_chld_disease_malaria; sortByR = 'per_chld_disease_malaria'; break;
-
-            case "Childhood Diseases-Diarrhoea": xValueR = d => d.per_chld_disease_diarrhoea; sortByR = 'per_chld_disease_diarrhoea'; break;
-
-            case "Childhood Diseases-Diarrhoea treated in Inpatients": xValueR = d => d.per_chld_disease_diarrhoea_trtd_inpatnt; sortByR = 'per_chld_disease_diarrhoea_trtd_inpatnt'; break;
-
-            case "Children admitted with upper respiratory infections": xValueR = d => d.per_chld_admtd_upper_resp_infec; sortByR = 'per_chld_admtd_upper_resp_infec'; break;
-
-            case "Childhood Diseases-Severe Acute Malnutrition(SAM)": xValueR = d => d.per_chld_disease_sam; sortByR = 'per_chld_disease_sam'; break;
-
-    }
-
-    var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
-    filterdata = filterCSV(data, 'month', valMonth);
-    monthDataR = sortData(filterdata, sortByR);
-    drawRight(monthDataR);
-
-  });
-
-  $(".toggle").click(function () {
-
-    $(this).text($(this).text() == 'Compare' ? 'Hide' : 'Compare');
-
-    let x = document.getElementById("b2");
-    let y = document.getElementById("cat2");
-
-    if (x.style.display === "none" && y.style.display === "none") {
-
-      x.style.display = "block";
-
-      y.style.display = "block";
-      x.text = "Hide";
-
-    } else {
-
-      x.style.display = "none";
-      y.style.display = "none";
-      x.text = "Show";
-
-    }
-
-    $(".category2 a").click(function () {
-
-      var valCategory = $(this).text();
-
-      $(this).parents('.dropdown').find('.dropdown-toggle').html(valCategory + ' <span class="selectedCategory2"></span>');
-
-    });
-    //trigger event
-
-    $(".category2 a").first().trigger('click');
-
-  });
 
   let choices = parseURLParameters(window.location.href);
   if (choices.length > 0) {
-    let selectedCat = choices[0].replace(/_/g, ' ');
-    $('.category a').parents('.dropdown').find('.dropdown-toggle').html(selectedCat + ' <span class="selectedCategory"></span>');
-    displayLeftChart(selectedCat); 
+    if(choices[0] == selCat2)
+      selCat2 = selCat1;
+
+    selCat1 = choices[0];
+    $("#category1").val(selCat1);
+    $("#category2").val(selCat2);
+    displayGraph(selCat1, selCat2); 
   }
 
   function parseURLParameters() {
@@ -681,27 +324,101 @@
       map.push(value);
     });
     return map;
-  }
+  };
 
+  function displayGraph(selectedCat1, selectedCat2){
+    if(quarterly == true)
+      var valMonth = qtickLabels[$('#quarterSlider').slider('getValue')];
+    else  
+      var valMonth = tickLabels[$('#monthSlider').slider('getValue')];
 
+    $.ajax({
+      method: "GET",
+      url: $endpoint,
+      data: {
+        'cat1': selectedCat1,
+        'cat2': selectedCat2,
+        'month': valMonth
+      },
+      success: handleFormSuccess,
+      error: handleFormError,
+    })
+  };
+
+  //By Default Category
   $(function () {
-    document.getElementById("b2").style.display = 'none';
-    document.getElementById("cat2").style.display = 'none';
-    document.getElementById('sw').style.display = 'none';
-
-    $(".category a").click(function () {
-
-      var valCategory = $(this).text();
-
-      $(this).parents('.dropdown').find('.dropdown-toggle').html(valCategory + ' <span class="selectedCategory"></span>');
-
-    });
-
-    if (choices.length <= 0)
-    $(".category a").first().trigger('click');
-
+    //trigger event
+    if (choices.length <= 0){
+      $("#category1").val("per_chld_disease_pneumonia");
+      $("#category2").val("per_chld_disease_sepsis");
+    }
+  });
+  //On Category Change
+  $("#category1").change(function () {
+    selCat1 = $(this).val();
+    displayGraph(selCat1, selCat2);
   });
 
+  $("#category2").change(function () {
+    selCat2 = $(this).val();
+    displayGraph(selCat1, selCat2);
+  });
+
+  function handleFormSuccess(data) {
+    data = data.data;
+    render(data);
+  }
+
+  function handleFormError(jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR)
+    console.log(textStatus)
+    console.log(errorThrown)
+  }
+
+  //Standardize Legend Name
+  function setLegend(val) {
+    if (val == 'per_chld_disease_pneumonia')
+      return 'Childhood Diseases-Pneumonia(%)';
+    else if (val == 'per_chld_disease_sepsis')
+      return 'Childhood Diseases-Sepsis(%)';
+    else if (val == 'per_chld_disease_tb')
+      return 'Childhood Diseases-Tuberculosis(TB)(%)';
+    else if (val == 'per_chld_disease_malaria')
+      return 'Childhood Diseases-Malaria(%)';
+    else if (val == 'per_chld_disease_diarrhoea')
+      return 'Childhood Diseases-Diarrhoea(%)';
+    else if (val == 'per_chld_disease_diarrhoea_trtd_inpatnt')
+      return 'Childhood Diseases-Diarrhoea treated in Inpatients(%)';
+    else if (val == 'per_chld_admtd_upper_resp_infec')
+      return 'Children admitted with upper respiratory infections(%)';
+    else
+      return 'Childhood Diseases-Severe Acute Malnutrition(SAM)';
+  }
+
+  //Toggling Between Monthly and Cumulative
+  $(document).ready(function () {
+    $('#cumulativeData').click(function() {
+        quarterly = true;
+        $("div.slider-tick-label-container").css("margin-left", "-4.138rem");
+        $("div.slider-tick-label").css("width", "8.25rem");
+
+        $("#quarterlySlider").show();
+        $("#monthlySlider").hide();
+
+        displayGraph(selCat1, selCat2);
+    });
+
+    $('#monthlyData').click(function() {
+        quarterly = false;
+        $("div.slider-tick-label-container").css("margin-left", "-3.792rem");
+        $("div.slider-tick-label").css("width", "7.583rem");
+        
+        $("#quarterlySlider").hide();
+        $("#monthlySlider").show();
+
+        displayGraph(selCat1, selCat2);
+    });
+  });
 </script>
 
 {% endblock %}
