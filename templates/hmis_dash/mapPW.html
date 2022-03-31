@@ -533,8 +533,14 @@
       let comp = (max - min) / 3;
      
       let tooltipValue = (d) => {
-        let ttv = `<b>${TextValue(d)}</b><br> 
-          ${Tooltipheader1(d)}  ${TooltipVal1(d)} (${ColorValue(d)}%)<br>`;
+        let ttv;
+        if(TooltipVal1 == 'd => d.properties.no_preterm_birth' || TooltipVal1 == 'd => d.properties.tot_still_birth'){
+          ttv = `<b>${TextValue(d)}</b><br> 
+          ${Tooltipheader1(d)}  ${TooltipVal1(d)} (${ColorValue(d)})<br>`;  
+        }else{
+          ttv = `<b>${TextValue(d)}</b><br> 
+            ${Tooltipheader1(d)}  ${TooltipVal1(d)} (${ColorValue(d)}%)<br>`;
+        }
         return ttv;
       }
       const onMouseOverPoly = d => {
